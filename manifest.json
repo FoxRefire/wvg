@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "name": "Widevine L3 Guessor 2024",
+    "version": "1.0",
+    "icons": {
+        "128": "icon.png"
+    },
+    "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "<all_urls>",
+        "activeTab",
+        "windows"
+    ],
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": true
+    },
+    "content_scripts": [
+        {
+            "run_at":"document_start",
+            "matches":["<all_urls>"],
+            "js": ["content.js"]
+        }
+    ],
+    "browser_action": {
+        "default_title": "Widevine Guessor"
+    },
+    "web_accessible_resources": ["inject.js"]
+}
