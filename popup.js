@@ -52,14 +52,12 @@ function selectRequest(){
     document.getElementById('selectRequest').style.display='block';
 }
 
-var CommonWV = async function(pssh, licUrl) {
+var CommonWV = async function(pssh, licUrl,_headers) {
     const serverAddr = "http://127.0.0.1:18888";
     console.group("fetch cert...");
     let certBuffer = await fetch(licUrl, {
         body: new Uint8Array([0x08, 0x04]),
-        headers: {
-            "Content-Type": "application/octet-stream"
-        },
+        headers: _headers,
         method: "POST"
     }).then(resp => resp.arrayBuffer());
     let certB64 = btoa(String.fromCharCode(...new Uint8Array(certBuffer)));
@@ -84,9 +82,7 @@ var CommonWV = async function(pssh, licUrl) {
     console.group("fetch license...");
     let licBuffer = await fetch(licUrl, {
         body: Uint8Array.from(atob(challengeBase64), (c) => c.charCodeAt(0)),
-        headers: {
-            "Content-Type": "application/octet-stream"
-        },
+        headers: _headers,
         method: "POST"
     }).then(resp => resp.arrayBuffer());
     let licB64 = btoa(String.fromCharCode(...new Uint8Array(licBuffer)));
@@ -127,7 +123,9 @@ async function guess(){
     //     method: "POST"
     // }).then(resp => resp.json());
 
-    const result=await CommonWV(psshs[userInputs['pssh']],requests[userInputs['license']]['url'])
+    const result=await CommonWV(psshs[userInputs['pssh']],
+                                requests[userInputs['license']]['url'],
+                                requests[userInputs['license']]['headers'])
     document.getElementById('result').value=result;
 }
 
