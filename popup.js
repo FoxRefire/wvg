@@ -52,8 +52,7 @@ function selectRequest(){
     document.getElementById('selectRequest').style.display='block';
 }
 
-var CommonWV = async function(pssh, licUrl,_headers) {
-    const serverAddr = "http://127.0.0.1:18888";
+var CommonWV = async function(serverAddr, pssh, licUrl,_headers) {
     console.group("fetch cert...");
     let certBuffer = await fetch(licUrl, {
         body: new Uint8Array([0x08, 0x04]),
@@ -123,7 +122,8 @@ async function guess(){
     //     method: "POST"
     // }).then(resp => resp.json());
 
-    const result=await CommonWV(psshs[userInputs['pssh']],
+    const result=await CommonWV(document.getElementById('guessr').value,
+                                psshs[userInputs['pssh']],
                                 requests[userInputs['license']]['url'],
                                 requests[userInputs['license']]['headers'])
     document.getElementById('result').value=result;
