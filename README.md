@@ -8,21 +8,21 @@
    
    * Firefox
      
-     1. Navigate to `about:debugging#/runtime/this-firefox`
+     1\. Navigate to `about:debugging#/runtime/this-firefox`
      
-     2. Load temporary addon
+     2\. Load temporary addon
    
    * Chrome
 
-     1. Navigate to `chrome://extensions/`
+     1\. Navigate to `chrome://extensions/`
 
-     2. Load unpacked
+     2\. Load unpacked
 
    * Kiwi Browser(Android) NOTE:Remote API needed; Not work with Termux for now
 
-     1. Navigate to ︙ --> Extensions
+     1\. Navigate to ︙ --> Extensions
 
-     2. \+(from .zip/.crx/.user.js)
+     2\. \+(from .zip/.crx/.user.js)
 
 ### Demo
 [demo.webm](https://github.com/FoxRefire/wvg/assets/155989196/f2f41e88-1fc5-4954-89d4-3dc4552258e2)
