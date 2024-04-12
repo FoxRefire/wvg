@@ -1,3 +1,4 @@
+var userInputs={};
 function drawList(arr,_searchBox,_list,_userInputs){
     const elements = arr;
     const searchBox = document.getElementById(_searchBox);

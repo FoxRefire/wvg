@@ -28,16 +28,10 @@
         <input type="hidden" id="licenseIndex" />
         <input type="button" id="licenseButton" value="Select" /><br>
 
-        <label for="challengeScheme">Challenge scheme</label>
+        <label for="scheme">Challenge scheme</label>
         <select id="challengeScheme">
-          <option value="raw">Raw</option>
-          <option value="b64">Base64</option>
-        </select><br>
-
-        <label for="licenseScheme">License scheme</label>
-        <select id="licenseScheme">
-          <option value="raw">Raw</option>
-          <option value="b64">Base64</option>
+          <option value="CommonWV">CommonWV</option>
+          <option value="DRMToday">DRMToday</option>
         </select><br>
 
         <input type="button" id="guess" value="Guess!"><br>
@@ -56,6 +50,6 @@
       <ul id="requestList"></ul>
     </div>
   </body>
-  <script src="popup.js"></script>
+  <script src="popup.js" type="module"></script>
   <script src="popup_drawList.js"></script>
 </html>
