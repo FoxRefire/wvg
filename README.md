@@ -30,8 +30,6 @@
 
 ### Todo
 
-* Support custom payload scheme
-
 * Improve UI
 
 ### Disclaimer

@@ -1,4 +1,5 @@
 import CommonWV from './schemes/CommonWV.js';
+import DRMToday from './schemes/DRMToday.js';
 
 let psshs=chrome.extension.getBackgroundPage().getPsshs();
 let requests=chrome.extension.getBackgroundPage().getRequests();
@@ -30,7 +31,16 @@ function handleRadioChange(event) {
 }
 
 async function guess(){
-    const result=await CommonWV(document.getElementById('guessr').value,
+    let WVScheme;
+    switch (document.getElementById('scheme').value) {
+        case "CommonWV":
+            WVScheme=CommonWV;
+            break;
+        case "DRMToday":
+            WVScheme=DRMToday;
+            break;
+    }
+    const result=await WVScheme(document.getElementById('guessr').value,
                                 document.getElementById('pssh').value,
                                 requests[userInputs['license']]['url'],
                                 requests[userInputs['license']]['headers'])
