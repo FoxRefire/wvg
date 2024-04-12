@@ -124,7 +124,7 @@ var CommonWV = async function(serverAddr, pssh, licUrl,_headers) {
 
 async function guess(){
     const result=await CommonWV(document.getElementById('guessr').value,
-                                psshs[userInputs['pssh']],
+                                document.getElementById('pssh').value,
                                 requests[userInputs['license']]['url'],
                                 requests[userInputs['license']]['headers'])
     document.getElementById('result').value=result;
@@ -139,5 +139,8 @@ if(psshs.length!=0){
         document.getElementById('guess').addEventListener("click", guess);
         drawList(psshs,'psshSearch','psshList','pssh');
         drawList(requests.map(r => r['url']),'requestSearch','requestList','license');
+        if(psshs.length==1){
+            document.getElementById('pssh').value=psshs[0];
+        }
     });
 }
