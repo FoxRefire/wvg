@@ -52,6 +52,22 @@ function selectRequest(){
     document.getElementById('selectRequest').style.display='block';
 }
 
+document.querySelectorAll('input[name="apiType"]').forEach(radio => {
+    radio.addEventListener('change', handleRadioChange);
+});
+function handleRadioChange(event) {
+    if (event.target.value=="public"){
+        document.getElementById('guessr').disabled="true";
+        document.getElementById('guessr').value="https://proposed-marketa-foxrefire.koyeb.app";
+    } else if (event.target.value=="local"){
+        document.getElementById('guessr').disabled="true";
+        document.getElementById('guessr').value="http://127.0.0.1:18888";
+    } else if (event.target.value=="custom"){
+        document.getElementById('guessr').disabled="false";
+        document.getElementById('guessr').value="";
+    }
+}
+
 var CommonWV = async function(serverAddr, pssh, licUrl,_headers) {
     console.group("fetch cert...");
     let certBuffer = await fetch(licUrl, {
@@ -107,21 +123,6 @@ var CommonWV = async function(serverAddr, pssh, licUrl,_headers) {
 };
 
 async function guess(){
-    endpoint = document.getElementById('guessr').value;
-    // payload = {
-    //     "PSSH": psshs[userInputs['pssh']],
-    //     "Headers": requests[userInputs['license']]['headers'],
-    //     "LicenseUrl": requests[userInputs['license']]['url']
-    // }
-    // console.log(JSON.stringify(payload));
-    // console.log(endpoint);
-    //
-    // let json = await fetch(endpoint, {
-    //     body: JSON.stringify(payload),
-    //     headers: {"Content-Type": "application/json"},
-    //     method: "POST"
-    // }).then(resp => resp.json());
-
     const result=await CommonWV(document.getElementById('guessr').value,
                                 psshs[userInputs['pssh']],
                                 requests[userInputs['license']]['url'],
@@ -140,5 +141,3 @@ if(psshs.length!=0){
         drawList(requests.map(r => r['url']),'requestSearch','requestList','license');
     });
 }
-
-//setInterval(()=>console.log(requests[userInputs['license']]),1500);
