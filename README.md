@@ -1,10 +1,12 @@
-## WVGuesserExtension
+## WVGuesserExtension-NextGen
+Extension works standalone.
+Not anymore need WVCore.Server API setup!
 
 ### Instalation
 
-1. Setup [Guesser API](https://github.com/nilaoda/WVCore.Server) ([Guide](https://github.com/nilaoda/Blog/discussions/58#discussioncomment-9052557))
-
-2. Install extension
+1. Donwload or clone this code
+2. At the same directory of `manifest.json`(root directory of this extension), put the device file named `device.wvd`
+3. Install extension
    
    * Firefox
      

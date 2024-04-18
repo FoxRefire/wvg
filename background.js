@@ -1,7 +1,7 @@
 let psshs=[];
 let requests=[];
 function convertHeaders(obj){
-    return Object.fromEntries(obj.map(header => [header.name, header.value]))
+    return JSON.stringify(Object.fromEntries(obj.map(header => [header.name, header.value])))
 }
 chrome.webRequest.onBeforeSendHeaders.addListener(
  function(details) {
