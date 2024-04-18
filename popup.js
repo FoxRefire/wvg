@@ -14,22 +14,6 @@ function selectRequest(){
     document.getElementById('selectRequest').style.display='block';
 }
 
-document.querySelectorAll('input[name="apiType"]').forEach(radio => {
-    radio.addEventListener('change', handleRadioChange);
-});
-function handleRadioChange(event) {
-    if (event.target.value=="public"){
-        document.getElementById('guessr').disabled="true";
-        document.getElementById('guessr').value="https://proposed-marketa-foxrefire.koyeb.app";
-    } else if (event.target.value=="local"){
-        document.getElementById('guessr').disabled="true";
-        document.getElementById('guessr').value="http://127.0.0.1:18888";
-    } else if (event.target.value=="custom"){
-        document.getElementById('guessr').disabled="false";
-        document.getElementById('guessr').value="";
-    }
-}
-
 async function guess(){
     let WVScheme;
     switch (document.getElementById('scheme').value) {
