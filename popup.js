@@ -11,22 +11,6 @@ function selectRequest(){
     document.getElementById('selectRequest').style.display='block';
 }
 
-document.querySelectorAll('input[name="apiType"]').forEach(radio => {
-    radio.addEventListener('change', handleRadioChange);
-});
-function handleRadioChange(event) {
-    if (event.target.value=="public"){
-        document.getElementById('guessr').disabled="true";
-        document.getElementById('guessr').value="https://proposed-marketa-foxrefire.koyeb.app";
-    } else if (event.target.value=="local"){
-        document.getElementById('guessr').disabled="true";
-        document.getElementById('guessr').value="http://127.0.0.1:18888";
-    } else if (event.target.value=="custom"){
-        document.getElementById('guessr').disabled="false";
-        document.getElementById('guessr').value="";
-    }
-}
-
 async function guess(){
     let pyodide = await loadPyodide();
     await pyodide.loadPackage(["certifi-2024.2.2-py3-none-any.whl","charset_normalizer-3.3.2-py3-none-any.whl","construct-2.8.8-py2.py3-none-any.whl","idna-3.6-py3-none-any.whl","packaging-23.2-py3-none-any.whl","protobuf-4.24.4-cp312-cp312-emscripten_3_1_52_wasm32.whl","pycryptodome-3.20.0-cp35-abi3-emscripten_3_1_52_wasm32.whl","pymp4-1.4.0-py3-none-any.whl","pyodide_http-0.2.1-py3-none-any.whl","pywidevine-1.8.0-py3-none-any.whl","requests-2.31.0-py3-none-any.whl","urllib3-2.2.1-py3-none-any.whl"].map(e=>"wheels/"+e))
