@@ -1,5 +1,9 @@
 ## WVGuesserExtension
 
+Looking for new version?
+
+See here: https://github.com/FoxRefire/wvg/tree/next
+
 ### Instalation
 
 1. Setup [Guesser API](https://github.com/nilaoda/WVCore.Server) ([Guide](https://github.com/nilaoda/Blog/discussions/58#discussioncomment-9052557))
