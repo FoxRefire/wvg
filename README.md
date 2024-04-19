@@ -1,6 +1,11 @@
 ## WVGuesserExtension-NextGen
 Extension works standalone.
+
 Not anymore need WVCore.Server API setup!
+
+Looking for legacy version?
+
+See here: https://github.com/FoxRefire/wvg/tree/legacy
 
 ### Instalation
 
