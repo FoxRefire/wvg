@@ -45,7 +45,8 @@ Only use it for content for which you own the rights and do not use it for pirac
 
 ### How it works?
 
-![名称未設定ファイル drawio](https://github.com/FoxRefire/wvg/assets/155989196/ef233474-7af9-4648-b64d-5b62cf801938)
+![image](https://github.com/FoxRefire/wvg/assets/155989196/91a52607-9d24-4072-8c25-c4dc7d062415)
+
 
 1. inject.js injected by content.js gets Widevine PSSH by hooking EME.
 2. background.js fetches POST URLs/Headers
