@@ -23,7 +23,7 @@ Looking for legacy version?: https://github.com/FoxRefire/wvg/tree/legacy
 
      2\. Load unpacked
 
-   * Kiwi Browser(Android) NOTE:Remote API needed; Not work with Termux for now
+   * Kiwi Browser(Android)
 
      1\. Navigate to ︙ --> Extensions
 
