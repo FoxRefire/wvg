@@ -7,7 +7,7 @@ Looking for legacy version?: https://github.com/FoxRefire/wvg/tree/legacy
 
 ### Instalation
 
-1. Donwload or clone this code
+1. Download or clone this code
 2. At the same directory of `manifest.json`(root directory of this extension), put the one of the following Android L3 CDM file(s).
    * Supported CDM Types
 
