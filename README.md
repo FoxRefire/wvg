@@ -8,7 +8,14 @@ Looking for legacy version?: https://github.com/FoxRefire/wvg/tree/legacy
 ### Instalation
 
 1. Donwload or clone this code
-2. At the same directory of `manifest.json`(root directory of this extension), put the device file named `device.wvd`
+2. At the same directory of `manifest.json`(root directory of this extension), put the one of the following Android L3 CDM file(s).
+   * Supported CDM Types
+
+      1\. `device.wvd`
+
+      2\. `device_client_id_blob` + `device_private_key`
+
+      3\. `client_id.bin` + `private_key.pem`
 3. Install extension
    
    * Firefox
@@ -36,6 +43,11 @@ Looking for legacy version?: https://github.com/FoxRefire/wvg/tree/legacy
 ### Todo
 
 * Improve UI
+* Localization
+* JSON rules for License URL and scheme selection
+
+For contributors, see here:
+https://github.com/FoxRefire/wvg/blob/next/CONTRIBUTION.md
 
 ### Disclaimer
 
