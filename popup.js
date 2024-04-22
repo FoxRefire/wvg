@@ -19,7 +19,7 @@ async function guess(){
     vars+=`licHeaders='${requests[userInputs['license']]['headers'].replace(/\\/g, "\\\\")}'\n`
     let pre=await fetch('python/pre.py').then(res=>res.text())
     let after=await fetch('python/after.py').then(res=>res.text())
-    let scheme=await fetch('python/schemes/CommonWV.py').then(res=>res.text())
+    let scheme=await fetch(`python/schemes/${document.getElementById("scheme").value}.py`).then(res=>res.text())
     let result = await pyodide.runPythonAsync([vars, pre, scheme, after].join("\n"));
     document.getElementById('result').value=result;
 }
