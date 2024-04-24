@@ -27,11 +27,17 @@ async function guess(){
     chrome.storage.local.set({[pageURL]: historyData}, function () {});
 }
 
+function copyResult(){
+    this.select();
+    navigator.clipboard.writeText(this.value);
+}
+
 if(psshs.length!=0){
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('noEME').style.display='none';
         document.getElementById('home').style.display='block';
         document.getElementById('guess').addEventListener("click", guess);
+        document.getElementById('result').addEventListener("click", copyResult);
         drawList(psshs,'psshSearch','psshList','pssh');
         drawList(requests.map(r => r['url']),'requestSearch','requestList','license');
         if(psshs.length==1){
