@@ -69,9 +69,9 @@ Only use it for content for which you own the rights and do not use it for pirac
 7. popup.js calls pywidevine script using pyodide in browser
 
 ## Third-party libraries
-* Pyodide
-* Pywidevine
-* json-view
+* [Pyodide](https://github.com/pyodide/pyodide) ([MPL-2.0](https://github.com/pyodide/pyodide/blob/main/LICENSE))
+* [Pywidevine](https://github.com/devine-dl/pywidevine) ([GPL-3.0](https://github.com/devine-dl/pywidevine/blob/master/LICENSE))
+* [json-view](https://github.com/pgrabovets/json-view) ([MIT](https://github.com/pgrabovets/json-view/blob/master/LICENSE))
 
 ### Big Thanks and inspired by
 https://github.com/emarsden/pssh-box-wasm/

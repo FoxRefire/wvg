@@ -1,6 +1,7 @@
 function showHistory(){
     chrome.storage.local.get(null, ((data) => {
-        jsonview.renderJSON(JSON.stringify(data), document.getElementById('histDisp'));
+        let tree=jsonview.renderJSON(JSON.stringify(data), document.getElementById('histDisp'));
+        jsonview.toggleNode(tree);
     }));
     document.getElementById('home').style.display='none';
     document.getElementById('history').style.display='block';
