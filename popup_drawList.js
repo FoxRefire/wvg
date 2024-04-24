@@ -1,3 +1,16 @@
+function selectPssh(){
+    document.getElementById('home').style.display='none';
+    document.getElementById('selectPssh').style.display='block';
+}
+
+function selectRequest(){
+    document.getElementById('home').style.display='none';
+    document.getElementById('selectRequest').style.display='block';
+}
+
+document.getElementById('psshButton').addEventListener("click", selectPssh);
+document.getElementById('licenseButton').addEventListener("click", selectRequest);
+
 var userInputs={};
 function drawList(arr,_searchBox,_list,_userInputs){
     const elements = arr;

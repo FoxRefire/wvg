@@ -1,11 +1,17 @@
-document.getElementById('backHistory').addEventListener("click", backHistory);
+function showHistory(){
+    chrome.storage.local.get(null, ((data) => {
+        jsonview.renderJSON(JSON.stringify(data), document.getElementById('histDisp'));
+    }));
+    document.getElementById('home').style.display='none';
+    document.getElementById('history').style.display='block';
+}
+
 function backHistory(){
     document.getElementById('histDisp').innerHTML="";
     document.getElementById('history').style.display='none';
     document.getElementById('home').style.display='block';
 }
 
-document.getElementById('saveHistory').addEventListener("click", saveHistory);
 function saveHistory(){
     chrome.storage.local.get(null, ((data) => {
         let blob = new Blob([JSON.stringify(data, null, "\t")], {type: "text/plain"});
@@ -20,10 +26,13 @@ function saveHistory(){
     }));
 }
 
-document.getElementById('clearHistory').addEventListener("click", clearHistory);
 function clearHistory(){
     if(confirm("Do you really want to clear history?")){
         chrome.storage.local.clear();
         document.getElementById('histDisp').innerHTML="";
     }
 }
+document.getElementById('historyButton').addEventListener("click", showHistory);
+document.getElementById('backHistory').addEventListener("click", backHistory);
+document.getElementById('saveHistory').addEventListener("click", saveHistory);
+document.getElementById('clearHistory').addEventListener("click", clearHistory);

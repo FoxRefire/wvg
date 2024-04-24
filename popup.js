@@ -2,24 +2,6 @@ let psshs=chrome.extension.getBackgroundPage().getPsshs();
 let requests=chrome.extension.getBackgroundPage().getRequests();
 let pageURL=chrome.extension.getBackgroundPage().getPageURL();
 
-function selectPssh(){
-    document.getElementById('home').style.display='none';
-    document.getElementById('selectPssh').style.display='block';
-}
-
-function selectRequest(){
-    document.getElementById('home').style.display='none';
-    document.getElementById('selectRequest').style.display='block';
-}
-
-function showHistory(){
-    chrome.storage.local.get(null, ((data) => {
-        jsonview.renderJSON(JSON.stringify(data), document.getElementById('histDisp'));
-    }));
-    document.getElementById('home').style.display='none';
-    document.getElementById('history').style.display='block';
-}
-
 async function guess(){
     //Init Pyodide
     let pyodide = await loadPyodide();
@@ -49,9 +31,6 @@ if(psshs.length!=0){
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('noEME').style.display='none';
         document.getElementById('home').style.display='block';
-        document.getElementById('historyButton').addEventListener("click", showHistory);
-        document.getElementById('psshButton').addEventListener("click", selectPssh);
-        document.getElementById('licenseButton').addEventListener("click", selectRequest);
         document.getElementById('guess').addEventListener("click", guess);
         drawList(psshs,'psshSearch','psshList','pssh');
         drawList(requests.map(r => r['url']),'requestSearch','requestList','license');
