@@ -35,8 +35,10 @@ chrome.runtime.onMessage.addListener(
 
 chrome.browserAction.onClicked.addListener(function(tab) {
     chrome.windows.create({
-        url: "popup.html", // 開きたいURLを指定
-        type: "popup" // 新規ウィンドウを開く
+        url: "popup.html",
+        type: "popup",
+        width: 820,
+        height: 600
     });
 });
 
