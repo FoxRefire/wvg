@@ -68,6 +68,11 @@ Only use it for content for which you own the rights and do not use it for pirac
 6. User input into UI
 7. popup.js calls pywidevine script using pyodide in browser
 
+## Third-party libraries
+* Pyodide
+* Pywidevine
+* json-view
+
 ### Big Thanks and inspired by
 https://github.com/emarsden/pssh-box-wasm/
 

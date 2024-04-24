@@ -2,15 +2,16 @@
   <head>
     <meta charset="UTF-8">
     <title>Widevine L3 Guessor 2024</title>
-    <style>div{display:none}</style>
+    <style>.hidden{display:none}</style>
     <script src="pyodide/pyodide.js"></script>
   </head>
   <body>
-    <div id="noEME" style="display:block">
+    <div id="noEME">
       Widevine content hasn't detected in this page.<br>
       Open widevine-protected website and try again!
     </div>
-    <div id="home">
+    <div id="home" class="hidden">
+      <button id="historyButton">Show History</button><br><br>
       <form id="wvForm">
         <label for="pssh">PSSH</label>
         <input type="text" id="pssh" disabled/>
@@ -35,15 +36,23 @@
 
       </form>
     </div>
-    <div id="selectPssh">
+    <div id="selectPssh" class="hidden">
       <input type="text" id="psshSearch" placeholder="Search">
       <ul id="psshList"></ul>
     </div>
-    <div id="selectRequest">
+    <div id="selectRequest" class="hidden">
       <input type="text" id="requestSearch" placeholder="Search">
       <ul id="requestList"></ul>
+    </div>
+    <div id="history" class="hidden">
+      <button id="backHistory">🔙 Back</button>
+      <button id="saveHistory">💾 Save History</button>
+      <button id="clearHistory">❌ Clear History</button>
+      <div id="histDisp"></div>
     </div>
   </body>
   <script src="popup.js" type="module"></script>
   <script src="popup_drawList.js"></script>
+  <script src="jsonview.js"></script>
+  <script src="popup_showHistory.js"></script>
 </html>

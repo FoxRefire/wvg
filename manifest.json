@@ -10,7 +10,8 @@
         "webRequestBlocking",
         "<all_urls>",
         "activeTab",
-        "windows"
+        "windows",
+        "storage"
     ],
     "background": {
         "scripts": ["background.js"],

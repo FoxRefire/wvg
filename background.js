@@ -1,5 +1,6 @@
 let psshs=[];
 let requests=[];
+let pageURL="";
 function convertHeaders(obj){
     return JSON.stringify(Object.fromEntries(obj.map(header => [header.name, header.value])))
 }
@@ -26,6 +27,7 @@ chrome.runtime.onMessage.addListener(
             break;
         case "PSSH":
             psshs.push(request.text)
+            pageURL=request.pageURL
             break;
     }
   }
@@ -44,4 +46,8 @@ window.getPsshs = () => {
 
 window.getRequests = () => {
   return requests;
+};
+
+window.getPageURL = () => {
+  return pageURL;
 };

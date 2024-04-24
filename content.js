@@ -13,6 +13,7 @@ document.addEventListener('pssh', (e) => {
     console.log(e.detail);
         chrome.runtime.sendMessage({
             type: "PSSH",
-            text: e.detail
+            text: e.detail,
+            pageURL: document.URL
         },null);
 });
