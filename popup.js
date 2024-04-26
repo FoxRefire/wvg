@@ -33,6 +33,12 @@ function copyResult(){
     navigator.clipboard.writeText(this.value);
 }
 
+window.corsFetch = (u, m, h, b) => {
+    chrome.runtime.sendMessage({type:"FETCH", u:u, m:m, h:h, b:b}, function(response) {
+        console.log(response)
+    });
+}
+
 if(psshs.length!=0){
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('noEME').style.display='none';
