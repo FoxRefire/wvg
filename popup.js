@@ -11,6 +11,7 @@ async function guess(){
     let vars=`pssh="${document.getElementById('pssh').value}"\n`
     vars+=`licUrl="${requests[userInputs['license']]['url']}"\n`
     vars+=`licHeaders='${requests[userInputs['license']]['headers'].replace(/\\/g, "\\\\")}'\n`
+    vars+=`licBody="${requests[userInputs['license']]['body']}"\n`
     let pre=await fetch('python/pre.py').then(res=>res.text())
     let after=await fetch('python/after.py').then(res=>res.text())
     let scheme=await fetch(`python/schemes/${document.getElementById("scheme").value}.py`).then(res=>res.text())
