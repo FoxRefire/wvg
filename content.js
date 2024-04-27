@@ -17,3 +17,22 @@ document.addEventListener('pssh', (e) => {
             pageURL: document.URL
         },null);
 });
+
+//Fetch from original origin
+chrome.runtime.onMessage.addListener(
+  function (request, sender, sendResponse) {
+    if(request.type=="FETCH"){
+        console.log("DEBUG:"+JSON.stringify(request))
+        let res = fetch(request.u, {
+            method: request.m,
+            headers: request.h,
+            body: request.b
+        }).then((r)=>r.arrayBuffer()).then((r)=>{
+            sendResponse(
+                btoa(String.fromCharCode(...new Uint8Array(r)))
+            );
+        })
+    }
+    return true
+  }
+);

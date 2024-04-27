@@ -11,7 +11,8 @@
         "<all_urls>",
         "activeTab",
         "windows",
-        "storage"
+        "storage",
+        "tabs"
     ],
     "background": {
         "scripts": ["background.js"],
