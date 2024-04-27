@@ -34,9 +34,13 @@ function copyResult(){
 }
 
 window.corsFetch = (u, m, h, b) => {
-    chrome.runtime.sendMessage({type:"FETCH", u:u, m:m, h:h, b:b}, function(response) {
-        console.log(response)
-    });
+    return new Promise((resolve, reject) => {
+        chrome.tabs.query({ url:pageURL }, (tabs) => {
+            chrome.tabs.sendMessage(tabs[0].id, {type:"FETCH", u:u, m:m, h:h, b:b}, (res) => {
+                resolve(res)
+            })
+        })
+    })
 }
 
 if(psshs.length!=0){

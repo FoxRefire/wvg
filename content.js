@@ -20,18 +20,19 @@ document.addEventListener('pssh', (e) => {
 
 //Fetch from original origin
 chrome.runtime.onMessage.addListener(
-  async function (request, sender, sendResponse) {
+  function (request, sender, sendResponse) {
     if(request.type=="FETCH"){
-        console.log("DEBUG")
-        let res = await fetch(request.u, {
+        console.log("DEBUG:"+JSON.stringify(request))
+        let res = fetch(request.u, {
             method: request.m,
             headers: request.h,
             body: request.b
-        }).then((r)=>r.json()).then((r)=>{
-            btoa(String.fromCharCode(...new Uint8Array(r)))
+        }).then((r)=>r.arrayBuffer()).then((r)=>{
+            sendResponse(
+                btoa(String.fromCharCode(...new Uint8Array(r)))
+            );
         })
-        sendResponse({res: res});
-        return true
     }
+    return true
   }
 );
