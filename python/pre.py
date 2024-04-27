@@ -10,10 +10,8 @@ pssh = PSSH(pssh)
 
 # load device
 try:
-    with open('device.wvd', 'wb') as f:
-        wvdExt=await (await pyfetch("device.wvd")).bytes()
-        f.write(wvdExt)
-    device = Device.load("device.wvd")
+    wvd = await (await pyfetch("device.wvd")).bytes()
+    device = Device.loads(wvd)
 except OSError:
     try:
         print("device.wvd not found! looking for device_client_id_blob and device_private_key...")
