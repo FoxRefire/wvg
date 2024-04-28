@@ -43,6 +43,26 @@ window.corsFetch = (u, m, h, b) => {
     })
 }
 
+async function autoSelect(){
+    let selectRules = await fetch("selectRules.conf").then((r)=>r.text());
+    selectRules = selectRules.replace(/\n^$/gm, "");
+    selectRules=selectRules.split("\n").map(function(row){return row.split("$$");});
+    for(var item of selectRules){
+        let search = requests.map(r => r['url']).findIndex(e => e.includes(item[0]));
+        if(search>=0){
+            if(item[1]) document.getElementById("scheme").value = item[1];
+            requestList.children[search].click();
+            break;
+        }
+    }
+    if(psshs.length==1){
+        document.getElementById('pssh').value=psshs[0];
+    }
+    if(requests.length==1){
+        requestList.children[0].click();
+    }
+}
+
 if(psshs.length!=0){
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('noEME').style.display='none';
@@ -51,8 +71,6 @@ if(psshs.length!=0){
         document.getElementById('result').addEventListener("click", copyResult);
         drawList(psshs,'psshSearch','psshList','pssh');
         drawList(requests.map(r => r['url']),'requestSearch','requestList','license');
-        if(psshs.length==1){
-            document.getElementById('pssh').value=psshs[0];
-        }
+        autoSelect();
     });
 }
