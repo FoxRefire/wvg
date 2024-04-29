@@ -1,4 +1,4 @@
-payload = json.loads(licBody)
+payload = json.loads(base64.b64decode(licBody.encode()).decode())
 challengeArr = list(challenge)
 payload['license_request_data']=challengeArr
 licence = await (await pyfetch(licUrl,
