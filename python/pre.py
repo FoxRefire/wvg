@@ -27,12 +27,11 @@ except OSError:
         except OSError:
             raise FileNotFoundError("CDM Keys not found!, RTFM!")
 
-    else:
-        device = Device(client_id=cID,
-                    private_key=pKey,
-                    type_=DeviceTypes['ANDROID'],
-                    security_level=3,
-                    flags=None)
+    device = Device(client_id=cID,
+                private_key=pKey,
+                type_=DeviceTypes['ANDROID'],
+                security_level=3,
+                flags=None)
 
 # load cdm
 cdm = Cdm.from_device(device)
