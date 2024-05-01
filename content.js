@@ -10,7 +10,7 @@ chrome.runtime.sendMessage({type: "RESET"},null);
 
 //Send PSSH into background.js
 document.addEventListener('pssh', (e) => {
-    console.log(e.detail);
+    console.log("[PSSH]"+e.detail);
         chrome.runtime.sendMessage({
             type: "PSSH",
             text: e.detail,
