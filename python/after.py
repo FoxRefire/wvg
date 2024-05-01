@@ -1,5 +1,9 @@
 # parse license challenge
-cdm.parse_license(session_id, licence)
+try:
+    cdm.parse_license(session_id, licence)
+except Exception as e:
+    js.document.getElementById('result').value="sch3m3n0t6upp0rt:y0ucanr3qu3st0rsu6mit\n\n[MPD?]\nhttps://gist.github.com/FoxRefire/fd606ec29a9bfa1f1bef897e0dc3a231"
+    raise Exception(e)
 
 # get keys
 keys=""

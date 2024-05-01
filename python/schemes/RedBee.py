@@ -1,5 +1,3 @@
-import base64
-import js
 from pyodide.ffi import to_js
 req = json.loads(base64.b64decode(licBody.encode()).decode())
 b64challenge = base64.b64encode(challenge).decode()

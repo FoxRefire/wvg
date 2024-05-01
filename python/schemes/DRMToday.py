@@ -1,4 +1,3 @@
-import base64
 res = await (await pyfetch(licUrl,
     method="POST",
     headers=licHeaders,

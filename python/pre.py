@@ -3,6 +3,8 @@ from pywidevine.device import Device, DeviceTypes
 from pywidevine.pssh import PSSH
 
 import json
+import js
+import base64
 from pyodide.http import pyfetch
 
 # prepare pssh
@@ -25,6 +27,7 @@ except OSError:
             pKey=await (await pyfetch("private_key.pem")).bytes()
 
         except OSError:
+            js.document.getElementById('result').value="n0suchd3v1c3f113:r3adth3fuck1ngma2ua1\n\n[MPD?]\nhttps://github.com/FoxRefire/wvg?tab=readme-ov-file#instalation"
             raise FileNotFoundError("CDM Keys not found!, RTFM!")
 
     device = Device(client_id=cID,

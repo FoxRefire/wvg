@@ -1,4 +1,3 @@
-import base64
 payload = json.loads(base64.b64decode(licBody.encode()).decode())
 challengeB64 = base64.b64encode(challenge).decode()
 payload['params']['object'] = challengeB64
