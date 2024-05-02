@@ -12,12 +12,14 @@
     <script src="pyodide/pyodide.js"></script>
   </head>
   <body>
+    <div id="toggleHistory">
+      <button id="historyButton">Show History</button><br><br>
+    </div>
     <div id="noEME">
       Widevine content hasn't detected in this page.<br>
       Open widevine-protected website and try again!
     </div>
     <div id="home" class="hidden">
-      <button id="historyButton">Show History</button><br><br>
       <form id="wvForm">
         <label for="pssh">PSSH</label>
         <input type="text" id="pssh" disabled/>
