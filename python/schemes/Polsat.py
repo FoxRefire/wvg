@@ -6,4 +6,4 @@ licence = await (await pyfetch(licUrl,
     headers=licHeaders,
     body=json.dumps(payload)
 )).json()
-base64.b64decode(licence['result']['object']['license'].encode())
+licence = base64.b64decode(licence['result']['object']['license'].encode())
