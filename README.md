@@ -37,14 +37,15 @@ Looking for legacy version?: https://github.com/FoxRefire/wvg/tree/legacy
      2\. \+(from .zip/.crx/.user.js)
 
 ### Demo
-[demo.webm](https://github.com/FoxRefire/wvg/assets/155989196/f2f41e88-1fc5-4954-89d4-3dc4552258e2)
+[Screencast_20240505_014046.webm](https://github.com/FoxRefire/wvg/assets/155989196/dbb07fde-a368-40f7-8209-711d5586009e)
+
 
 
 ### Todo
 
 * Improve UI
 * Localization
-* JSON rules for License URL and scheme selection
+* Cache pyodide to make guessing process faster
 
 For contributors, see here:
 https://github.com/FoxRefire/wvg/blob/next/CONTRIBUTION.md
