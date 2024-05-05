@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
     "name": "Widevine L3 Guessor 2024",
-    "version": "240505.1",
-    "version_name": "85d937c",
+    "version": "240505.2",
+    "version_name": "48cfbc6",
     "icons": {
         "128": "icon.png"
     },
