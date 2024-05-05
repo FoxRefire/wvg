@@ -26,7 +26,7 @@ chrome.webRequest.onBeforeRequest.addListener(
  function(details) {
     if (details.method === "POST") {
       window.bodys.push({
-          body:btoa(String.fromCharCode(...new Uint8Array(details.requestBody.raw[0]['bytes']))),
+          body:details.requestBody.raw ? btoa(String.fromCharCode(...new Uint8Array(details.requestBody.raw[0]['bytes']))) : "",
           id:details.requestId
       });
     }
