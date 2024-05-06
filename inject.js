@@ -15,8 +15,11 @@ const originalGenerateRequest = MediaKeySession.prototype.generateRequest;
 MediaKeySession.prototype.generateRequest = function(initDataType, initData) {
     const result = originalGenerateRequest.call(this, initDataType, initData);
     //Get PSSH and pass into content.js
-    document.dispatchEvent(new CustomEvent('pssh', {
-        detail: getPssh(initData)
-    }));
-    return result;
+    try {
+        document.dispatchEvent(new CustomEvent('pssh', {
+            detail: getPssh(initData)
+        }));
+    } finally {
+        return result;
+    }
 };
