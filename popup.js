@@ -1,6 +1,7 @@
 let psshs=chrome.extension.getBackgroundPage().psshs;
 let requests=chrome.extension.getBackgroundPage().requests;
 let pageURL=chrome.extension.getBackgroundPage().pageURL;
+let clearkey=chrome.extension.getBackgroundPage().clearkey;
 
 async function guess(){
     //Be patient!
@@ -81,4 +82,8 @@ if(psshs.length!=0){
         drawList(requests.map(r => r['url']),'requestSearch','requestList','license');
         autoSelect();
     });
+} else if(clearkey) {
+    document.getElementById('noEME').style.display='none';
+    document.getElementById('ckHome').style.display='block';
+    document.getElementById('ckResult').value=clearkey;
 }

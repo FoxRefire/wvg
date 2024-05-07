@@ -10,9 +10,17 @@ chrome.runtime.sendMessage({type: "RESET"},null);
 
 //Send PSSH into background.js
 document.addEventListener('pssh', (e) => {
-    console.log("[PSSH]"+e.detail);
         chrome.runtime.sendMessage({
             type: "PSSH",
+            text: e.detail,
+            pageURL: document.URL
+        },null);
+});
+
+//Send Clearkey into background.js
+document.addEventListener('clearkey', (e) => {
+        chrome.runtime.sendMessage({
+            type: "CLEARKEY",
             text: e.detail,
             pageURL: document.URL
         },null);

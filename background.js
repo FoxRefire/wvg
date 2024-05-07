@@ -2,6 +2,7 @@ window.psshs=[];
 window.requests=[];
 window.bodys=[];
 window.pageURL="";
+window.clearkey="";
 function convertHeaders(obj){
     return JSON.stringify(Object.fromEntries(obj.map(header => [header.name, header.value])))
 }
@@ -43,9 +44,14 @@ chrome.runtime.onMessage.addListener(
             window.psshs=[];
             window.requests=[];
             window.bodys=[];
+            window.clearkey=null;
             break;
         case "PSSH":
             window.psshs.push(request.text)
+            window.pageURL=request.pageURL
+            break;
+        case "CLEARKEY":
+            window.clearkey=request.text
             window.pageURL=request.pageURL
             break;
     }
