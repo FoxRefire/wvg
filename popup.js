@@ -86,4 +86,5 @@ if(psshs.length!=0){
     document.getElementById('noEME').style.display='none';
     document.getElementById('ckHome').style.display='block';
     document.getElementById('ckResult').value=clearkey;
+    document.getElementById('ckResult').addEventListener("click", copyResult);
 }
