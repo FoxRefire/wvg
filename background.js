@@ -41,10 +41,7 @@ chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
     switch(request.type){
         case "RESET":
-            window.psshs=[];
-            window.requests=[];
-            window.bodys=[];
-            window.clearkey=null;
+            location.reload()
             break;
         case "PSSH":
             window.psshs.push(request.text)
