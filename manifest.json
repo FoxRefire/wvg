@@ -13,7 +13,8 @@
         "activeTab",
         "windows",
         "storage",
-        "tabs"
+        "tabs",
+        "contextMenus"
     ],
     "background": {
         "scripts": ["background.js"],

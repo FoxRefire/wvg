@@ -3,23 +3,38 @@ window.requests=[];
 window.bodys=[];
 window.pageURL="";
 window.clearkey="";
+
+chrome.storage.local.get("isBlock", (value) => {
+    if(value.isBlock == true){
+        window.isBlock=true;
+    } else {
+        window.isBlock=false;
+    }
+    console.log("Debug:"+value.isBlock)
+})
+
 function convertHeaders(obj){
     return JSON.stringify(Object.fromEntries(obj.map(header => [header.name, header.value])))
 }
 
 //Get URL and headers from POST requests
 chrome.webRequest.onBeforeSendHeaders.addListener(
- function(details) {
-    if (details.method === "POST") {
-      window.requests.push({
-          url:details.url,
-          headers:convertHeaders(details.requestHeaders),
-          body:window.bodys.find((b) => b.id == details.requestId).body
-      });
-    }
- },
- {urls: ["<all_urls>"]},
- ["requestHeaders"]
+    function(details) {
+        if (details.method === "POST") {
+            window.requests.push({
+                url:details.url,
+                headers:convertHeaders(details.requestHeaders),
+                body:window.bodys.find((b) => b.id == details.requestId).body
+            });
+            if(details.url.includes("license.vdocipher.com") && window.isBlock==true){
+                return {cancel:true}
+            } else {
+                return details
+            }
+        }
+    },
+    {urls: ["<all_urls>"]},
+    ["requestHeaders", "blocking"]
 );
 
 //Get requestBody from POST requests
@@ -43,13 +58,14 @@ chrome.runtime.onMessage.addListener(
         case "RESET":
             location.reload()
             break;
+        case "URL":
+            window.pageURL=request.text
+            break;
         case "PSSH":
             window.psshs.push(request.text)
-            window.pageURL=request.pageURL
             break;
         case "CLEARKEY":
             window.clearkey=request.text
-            window.pageURL=request.pageURL
             break;
     }
   }
@@ -63,3 +79,24 @@ chrome.browserAction.onClicked.addListener(function(tab) {
         height: 600
     });
 });
+
+chrome.runtime.onInstalled.addListener(() => {
+    let toggleBlocking = chrome.contextMenus.create({
+        id: "toggleBlocking",
+        title: "Disable License Blocking"
+    });
+})
+
+chrome.contextMenus.onClicked.addListener(item => {
+    if(item.menuItemId == "toggleBlocking"){
+        chrome.storage.local.get("isBlock", (value) => {
+            if(value.isBlock == true){
+                chrome.storage.local.set({'isBlock': false}, ()=>{});
+                chrome.contextMenus.update("toggleBlocking",{title: "Enable License Blocking"})
+            } else {
+                chrome.storage.local.set({'isBlock': true}, ()=>{});
+                chrome.contextMenus.update("toggleBlocking",{title: "Disable License Blocking"})
+            }
+        })
+    }
+})

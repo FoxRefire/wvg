@@ -6,14 +6,21 @@ script.src = chrome.runtime.getURL("inject.js");
 (document.head || document.documentElement).appendChild(script);
 
 //Reset variables at every page load in background.js
-chrome.runtime.sendMessage({type: "RESET"},null);
+if (window === window.parent){
+    chrome.runtime.sendMessage({type: "RESET"},null);
+    setTimeout( ()=>{
+        chrome.runtime.sendMessage({
+            type: "URL",
+            text: document.URL
+        },null);
+    }, 700);
+}
 
 //Send PSSH into background.js
 document.addEventListener('pssh', (e) => {
         chrome.runtime.sendMessage({
             type: "PSSH",
-            text: e.detail,
-            pageURL: document.URL
+            text: e.detail
         },null);
 });
 
@@ -21,8 +28,7 @@ document.addEventListener('pssh', (e) => {
 document.addEventListener('clearkey', (e) => {
         chrome.runtime.sendMessage({
             type: "CLEARKEY",
-            text: e.detail,
-            pageURL: document.URL
+            text: e.detail
         },null);
 });
 
