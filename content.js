@@ -39,7 +39,7 @@ chrome.runtime.onMessage.addListener(
         console.log("DEBUG:"+JSON.stringify(request))
         let res = fetch(request.u, {
             method: request.m,
-            headers: request.h,
+            headers: JSON.parse(request.h),
             body: request.b
         }).then((r)=>r.arrayBuffer()).then((r)=>{
             sendResponse(
