@@ -14,21 +14,21 @@ pssh = PSSH(pssh)
 try:
     wvd = await (await pyfetch("device.wvd")).bytes()
     device = Device.loads(wvd)
-except OSError:
+except Exception:
     try:
         print("device.wvd not found! looking for device_client_id_blob and device_private_key...")
         cID=await (await pyfetch("device_client_id_blob")).bytes()
         pKey=await (await pyfetch("device_private_key")).bytes()
 
-    except OSError:
+    except Exception:
         try:
             print("device_client_id_blob and device_private_key not found! looking for client_id.bin and private_key.pem...")
             cID=await (await pyfetch("client_id.bin")).bytes()
             pKey=await (await pyfetch("private_key.pem")).bytes()
 
-        except OSError:
+        except Exception as e:
             js.document.getElementById('result').value="n0suchd3v1c3f113:r3adth3fuck1ngma2ua1\n\n[MPD?]\nhttps://github.com/FoxRefire/wvg?tab=readme-ov-file#instalation"
-            raise FileNotFoundError("CDM Keys not found!, RTFM!")
+            raise Exception(e)
 
     device = Device(client_id=cID,
                 private_key=pKey,
