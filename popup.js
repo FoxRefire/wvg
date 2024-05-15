@@ -54,8 +54,9 @@ window.corsFetch = (u, m, h, b) => {
 
 async function autoSelect(){
     let selectRules = await fetch("selectRules.conf").then((r)=>r.text());
-    selectRules = selectRules.replace(/\n^$/gm, "");
-    selectRules=selectRules.split("\n").map(function(row){return row.split("$$");});
+    //Remove blank lines, comment-outs, and trailing spaces at the end of lines
+    selectRules = selectRules.replace(/\n^\s*$|\s*\/\/.*|\s*$/gm, "");
+    selectRules = selectRules.split("\n").map(row => row.split("$$"));
     for(var item of selectRules){
         let search = requests.map(r => r['url']).findIndex(e => e.includes(item[0]));
         if(search>=0){
