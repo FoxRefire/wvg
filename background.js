@@ -1,3 +1,4 @@
+(async () => {
 window.psshs=[];
 window.requests=[];
 window.bodys=[];
@@ -5,16 +6,22 @@ window.pageURL="";
 window.clearkey="";
 
 chrome.storage.local.get("isBlock", (value) => {
-    if(value.isBlock == true){
-        window.isBlock=true;
-    } else {
-        window.isBlock=false;
-    }
-    console.log("Debug:"+value.isBlock)
+    window.isBlock = value.isBlock ? true : false;
 })
 
 function convertHeaders(obj){
     return JSON.stringify(Object.fromEntries(obj.map(header => [header.name, header.value])))
+}
+
+window.blockRules = await fetch("blockRules.conf").then((r)=>r.text());
+blockRules = blockRules.replace(/\n^\s*$|\s*\/\/.*|\s*$/gm, "");
+blockRules = blockRules.split("\n");
+function testBlock(url) {
+    if(window.isBlock){
+        return blockRules.map(e => url.includes(e)).some(e=>e)
+    } else {
+        return false
+    }
 }
 
 //Get URL and headers from POST requests
@@ -26,10 +33,8 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
                 headers:convertHeaders(details.requestHeaders),
                 body:window.bodys.find((b) => b.id == details.requestId).body
             });
-            if(details.url.includes("license.vdocipher.com") && window.isBlock==true){
+            if(testBlock(details.url)){
                 return {cancel:true}
-            } else {
-                return details
             }
         }
     },
@@ -70,6 +75,7 @@ chrome.runtime.onMessage.addListener(
     }
   }
 );
+} )()
 
 chrome.browserAction.onClicked.addListener(function(tab) {
     chrome.windows.create({
@@ -81,9 +87,10 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 });
 
 chrome.runtime.onInstalled.addListener(() => {
+    chrome.storage.local.set({'isBlock': false}, null);
     let toggleBlocking = chrome.contextMenus.create({
         id: "toggleBlocking",
-        title: "Disable License Blocking"
+        title: "Enable License Blocking"
     });
 })
 
@@ -91,10 +98,10 @@ chrome.contextMenus.onClicked.addListener(item => {
     if(item.menuItemId == "toggleBlocking"){
         chrome.storage.local.get("isBlock", (value) => {
             if(value.isBlock == true){
-                chrome.storage.local.set({'isBlock': false}, ()=>{});
+                chrome.storage.local.set({'isBlock': false}, null);
                 chrome.contextMenus.update("toggleBlocking",{title: "Enable License Blocking"})
             } else {
-                chrome.storage.local.set({'isBlock': true}, ()=>{});
+                chrome.storage.local.set({'isBlock': true}, null);
                 chrome.contextMenus.update("toggleBlocking",{title: "Disable License Blocking"})
             }
         })
