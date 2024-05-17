@@ -1,4 +1,3 @@
-js.chrome.extension.getBackgroundPage().isBlock=False
 b64challenge = base64.b64encode(challenge).decode()
 
 payload = json.loads(base64.b64decode(licBody.encode()).decode())

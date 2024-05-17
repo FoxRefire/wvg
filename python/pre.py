@@ -46,3 +46,5 @@ session_id = cdm.open()
 challenge = cdm.get_license_challenge(session_id, pssh)
 
 licHeaders=json.loads(licHeaders)
+
+js.chrome.extension.getBackgroundPage().isBlock=False
