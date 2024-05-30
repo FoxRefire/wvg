@@ -1,4 +1,5 @@
 from pywidevine.cdm import Cdm
+from pywidevine.remotecdm import RemoteCdm
 from pywidevine.device import Device, DeviceTypes
 from pywidevine.pssh import PSSH
 
@@ -31,6 +32,13 @@ async def loadCdm():
         cID=await (await pyfetch("client_id.bin")).bytes()
         pKey=await (await pyfetch("private_key.pem")).bytes()
         return Cdm.from_device(blobsToDevice(cID, pKey))
+    except:
+        pass
+
+    # Looking for remote.json
+    try:
+        remote_conf=await (await pyfetch("remote.json")).json()
+        return RemoteCdm(**remote_conf)
     except Exception as e:
         js.document.getElementById('result').value="n0suchd3v1c3f113:r3adth3fuck1ngma2ua1\n\n[MPD?]\nhttps://github.com/FoxRefire/wvg?tab=readme-ov-file#instalation"
         raise Exception(e)
