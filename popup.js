@@ -73,19 +73,20 @@ async function autoSelect(){
     }
 }
 
-if(psshs.length!=0){
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('noEME').style.display='none';
-        document.getElementById('home').style.display='block';
+if (clearkey) {
+    document.getElementById('noEME').style.display = 'none';
+    document.getElementById('ckHome').style.display = 'block';
+    document.getElementById('ckResult').value = clearkey;
+    document.getElementById('ckResult').addEventListener("click", copyResult);
+} else if (psshs.length != 0) {
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('noEME').style.display = 'none';
+        document.getElementById('home').style.display = 'block';
         document.getElementById('guess').addEventListener("click", guess);
         document.getElementById('result').addEventListener("click", copyResult);
-        drawList(psshs,'psshSearch','psshList','pssh');
-        drawList(requests.map(r => r['url']),'requestSearch','requestList','license');
+        drawList(psshs, 'psshSearch', 'psshList', 'pssh');
+        drawList(requests.map(r => r['url']), 'requestSearch', 'requestList', 'license');
         autoSelect();
+        autoMPD(); // autoMPD ADD+
     });
-} else if(clearkey) {
-    document.getElementById('noEME').style.display='none';
-    document.getElementById('ckHome').style.display='block';
-    document.getElementById('ckResult').value=clearkey;
-    document.getElementById('ckResult').addEventListener("click", copyResult);
 }
