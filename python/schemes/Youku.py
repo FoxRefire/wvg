@@ -5,5 +5,5 @@ payload['licenseRequest'] = challengeB64
 payload = urllib.parse.urlencode(payload)
 
 res = await corsFetch(licUrl, "POST", licHeaders, payload, "json")
-licence = base64.b64decode(res['data'].encode())
+licence = res['data']
 

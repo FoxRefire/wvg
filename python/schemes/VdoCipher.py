@@ -6,4 +6,4 @@ decoded_token['licenseRequest'] = b64challenge
 payload = {"token": base64.b64encode(json.dumps(decoded_token).encode()).decode()}
 
 res = await corsFetch(licUrl, "POST", licHeaders, payload, "json")
-licence = base64.b64decode(res["license"].encode())
+licence = res["license"]

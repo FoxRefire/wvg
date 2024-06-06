@@ -6,4 +6,4 @@ res = await (await pyfetch(licUrl,
     headers=licHeaders,
     body=json.dumps(payload)
 )).json()
-licence = base64.b64decode(res["getWidevineLicenseResponse"]["license"].encode())
+licence = res["getWidevineLicenseResponse"]["license"]
