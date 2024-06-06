@@ -36,11 +36,10 @@ document.addEventListener('clearkey', (e) => {
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
     if(request.type=="FETCH"){
-        console.log("DEBUG:"+JSON.stringify(request))
         let res = fetch(request.u, {
             method: request.m,
             headers: JSON.parse(request.h),
-            body: request.b
+            body: Uint8Array.from(atob(request.b), c => c.charCodeAt(0))
         }).then((r)=>r.arrayBuffer()).then((r)=>{
             sendResponse(
                 btoa(String.fromCharCode(...new Uint8Array(r)))
