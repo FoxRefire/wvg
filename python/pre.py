@@ -63,6 +63,18 @@ async def corsFetch(url: str, method: str, headers: [dict, str], body: [dict, by
 
     return res
 
+# Define loadBody API for loading requestBody to scheme concisely
+def loadBody(loadAs: str):
+    global licBody
+    licBody = base64.b64decode(licBody.encode())
+
+    match loadAs:
+        case "blob": pass
+        case "str": licBody = licBody.decode()
+        case "json": licBody = json.loads(licBody.decode())
+
+    return licBody
+
 # prepare pssh
 pssh = PSSH(pssh)
 

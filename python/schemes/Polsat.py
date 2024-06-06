@@ -1,4 +1,4 @@
-payload = json.loads(base64.b64decode(licBody.encode()).decode())
+payload = loadBody("json")
 challengeB64 = base64.b64encode(challenge).decode()
 payload['params']['object'] = challengeB64
 licence = await (await pyfetch(licUrl,

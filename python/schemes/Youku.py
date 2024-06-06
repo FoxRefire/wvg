@@ -1,5 +1,5 @@
 import urllib.parse
-payload = urllib.parse.parse_qs(base64.b64decode(licBody.encode()).decode())
+payload = urllib.parse.parse_qs(loadBody("str"))
 challengeB64 = base64.b64encode(challenge).decode()
 payload['licenseRequest'] = challengeB64
 payload = urllib.parse.urlencode(payload)
