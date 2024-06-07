@@ -1,5 +1,1 @@
-licence = await (await pyfetch(licUrl,
-    method="POST",
-    headers=licHeaders,
-    body=challenge
-)).bytes()
+licence = await corsFetch(licUrl, "POST", licHeaders, challenge, "blob")

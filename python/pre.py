@@ -43,6 +43,37 @@ async def loadCdm():
         js.document.getElementById('result').value="n0suchd3v1c3f113:r3adth3fuck1ngma2ua1\n\n[MPD?]\nhttps://github.com/FoxRefire/wvg?tab=readme-ov-file#instalation"
         raise Exception(e)
 
+# Define corsFetch API for requesting server that require origin header
+async def corsFetch(url: str, method: str, headers: [dict, str], body: [dict, bytes, str], resType: str="blob"):
+    if type(headers) == dict:
+        headers = json.dumps(headers)
+
+    match body:
+        case bytes(): body = base64.b64encode(body).decode()
+        case str(): body = base64.b64encode(body.encode()).decode()
+        case dict(): body = base64.b64encode(json.dumps(body).encode()).decode()
+
+    res = await js.corsFetch(url, method, headers, body)
+    res = base64.b64decode(res.encode())
+
+    match resType:
+        case "blob": pass
+        case "str": res = res.decode()
+        case "json": res = json.loads(res.decode())
+
+    return res
+
+# Define loadBody API for loading requestBody to scheme concisely
+def loadBody(loadAs: str):
+    global licBody
+    licBody = base64.b64decode(licBody.encode())
+
+    match loadAs:
+        case "blob": pass
+        case "str": licBody = licBody.decode()
+        case "json": licBody = json.loads(licBody.decode())
+
+    return licBody
 
 # prepare pssh
 pssh = PSSH(pssh)
