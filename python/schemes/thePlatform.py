@@ -1,4 +1,4 @@
-payload = json.loads(base64.b64decode(licBody.encode()).decode())
+payload = loadBody("json")
 b64challenge = base64.b64encode(challenge).decode()
 payload["getWidevineLicense"]["widevineChallenge"]=b64challenge
 res = await (await pyfetch(licUrl,
@@ -6,4 +6,4 @@ res = await (await pyfetch(licUrl,
     headers=licHeaders,
     body=json.dumps(payload)
 )).json()
-licence = base64.b64decode(res["getWidevineLicenseResponse"]["license"].encode())
+licence = res["getWidevineLicenseResponse"]["license"]

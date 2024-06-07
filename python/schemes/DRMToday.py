@@ -3,5 +3,5 @@ res = await (await pyfetch(licUrl,
     headers=licHeaders,
     body=challenge
 )).json()
-licence = base64.b64decode(res['license'].encode())
+licence = res['license']
 

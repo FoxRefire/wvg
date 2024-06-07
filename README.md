@@ -8,6 +8,9 @@ Looking for legacy version?: https://github.com/FoxRefire/wvg/tree/legacy
 
 1. Download or clone this code
 2. At the same directory of `manifest.json`(root directory of this extension), put the one of the following Android L3 CDM file(s).
+
+   *Don't know how to get these files? See [How to dump CDM key pair](https://github.com/FoxRefire/wvg/wiki/How-to-dump-CDM-key-pair) for more informations.*
+
    * Supported CDM Types
 
       1. `device.wvd`
