@@ -86,13 +86,15 @@ chrome.browserAction.onClicked.addListener(function(tab) {
     });
 });
 
-chrome.runtime.onInstalled.addListener(() => {
+function createMenu(){
     chrome.storage.local.set({'isBlock': false}, null);
-    let toggleBlocking = chrome.contextMenus.create({
+    chrome.contextMenus.create({
         id: "toggleBlocking",
         title: "Enable License Blocking"
     });
-})
+}
+chrome.runtime.onInstalled.addListener(createMenu)
+chrome.runtime.onStartup.addListener(createMenu)
 
 chrome.contextMenus.onClicked.addListener(item => {
     if(item.menuItemId == "toggleBlocking"){
