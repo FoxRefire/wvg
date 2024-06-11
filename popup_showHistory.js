@@ -6,18 +6,27 @@ function showHistory(){
     }));
     document.getElementById('home').style.display='none';
     document.getElementById('noEME').style.display='none';
-    document.getElementById('history').style.display='block';
+    document.getElementById('history').style.display='grid';
     document.getElementById('toggleHistory').style.display='none';
+    document.getElementById('selectPssh').style.display='none';
+    document.getElementById('psshList').style.display='none';
+    document.getElementById('selectRequest').style.display='none';
+    document.getElementById('requestListList').style.display='none';
+
 }
 
 function backHistory(){
     document.getElementById('histDisp').innerHTML="";
     document.getElementById('history').style.display='none';
-    document.getElementById('toggleHistory').style.display='block';
+    document.getElementById('selectPssh').style.display='none';
+    document.getElementById('psshList').style.display='none';
+    document.getElementById('toggleHistory').style.display='grid';
+    document.getElementById('selectRequest').style.display='none';
+    document.getElementById('requestList').style.display='none';
     if(psshs.length != 0){
-        document.getElementById('home').style.display='block';
+        document.getElementById('home').style.display='grid';
     } else {
-        document.getElementById('noEME').style.display='block';
+        document.getElementById('noEME').style.display='grid';
     }
 }
 

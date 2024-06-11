@@ -1,0 +1,114 @@
+.hidden {
+    display: none;
+}
+
+html, body {
+    display: grid;
+    height: 100%;
+    width: 100%;
+    margin: 0; /* Reset default margin */
+    padding: 0; /* Reset default padding */
+}
+
+body {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background: linear-gradient(45deg, #0d364c, #062535, #02141e);
+    grid-template-rows: auto 1fr auto;
+}
+
+#noEME {
+    justify-self: center;
+    align-self: center;
+    color: white;
+}
+
+#updateNotice {
+    justify-self: center;
+    align-self: end;
+    color: white;
+}
+
+#updateNotice a{
+    color: aqua;
+}
+
+#wvForm {
+    display: grid;
+    grid-template-rows: auto;
+    color: white;
+}
+
+#wvForm label {
+    justify-self: center;
+}
+
+#pssh {
+    width: 80%;
+    justify-self: center;
+}
+
+#psshButton {
+    width: 20%;
+    justify-self: center;
+}
+
+#license {
+    width: 80%;
+    justify-self: center;
+}
+
+#licenseButton {
+    width: 20%;
+    justify-self: center;
+}
+
+#scheme {
+    width: 80%;
+    justify-self: center;
+}
+
+#toggleHistory {
+    display: grid;
+}
+
+#toggleHistory button {
+    width: 20%;
+    height: auto;
+}
+
+#guess {
+    width: 20%;
+    justify-self: center;
+    margin-top: 5%;
+}
+
+#result {
+    width: 90%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    resize: none;
+    justify-self: center;
+}
+
+#psshList, #requestList {
+    color: white;
+}
+
+#ckHome h3, label {
+    color: white;
+    justify-self: center;
+}
+
+#ckHome label {
+    align-self: end;
+}
+
+#ckResult {
+    width: 90%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    resize: none;
+    justify-self: center;
+}

@@ -2,16 +2,10 @@
   <head>
     <meta charset="UTF-8">
     <title>Widevine L3 Guessor 2024</title>
-    <style>
-      .hidden{display:none}
-      html, body {
-        height: 100%;
-        width: 100%;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css">
     <script src="pyodide/pyodide.js"></script>
   </head>
-  <body>
+  <body id="bodyid">
     <div id="toggleHistory">
       <button id="historyButton">Show History</button><br><br>
     </div>
@@ -46,7 +40,7 @@
           <option value="thePlatform">thePlatform</option>
           <option value="VdoCipher">VdoCipher</option>
           <option value="Youku">Youku</option>
-        </select><br>
+        </select>
 
         <input type="button" id="guess" value="Guess!"><br>
 
