@@ -1,6 +1,7 @@
 let psshs=chrome.extension.getBackgroundPage().psshs;
 let requests=chrome.extension.getBackgroundPage().requests;
 let pageURL=chrome.extension.getBackgroundPage().pageURL;
+let targetIds=chrome.extension.getBackgroundPage().targetIds;
 let clearkey=chrome.extension.getBackgroundPage().clearkey;
 
 async function guess(){
@@ -30,7 +31,7 @@ async function guess(){
         PSSH: document.getElementById('pssh').value,
         KEYS: result.split("\n").slice(0,-1)
     }
-    chrome.storage.local.set({[pageURL]: historyData}, function () {});
+    chrome.storage.local.set({[pageURL]: historyData}, null);
 
     //All Done!
     document.body.style.cursor = "auto";
@@ -44,10 +45,8 @@ function copyResult(){
 
 window.corsFetch = (u, m, h, b) => {
     return new Promise((resolve, reject) => {
-        chrome.tabs.query({ url:pageURL }, (tabs) => {
-            chrome.tabs.sendMessage(tabs[0].id, {type:"FETCH", u:u, m:m, h:h, b:b}, (res) => {
-                resolve(res)
-            })
+        chrome.tabs.sendMessage(targetIds[0], {type:"FETCH", u:u, m:m, h:h, b:b}, {frameId:targetIds[1]}, res => {
+            resolve(res)
         })
     })
 }

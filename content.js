@@ -8,12 +8,6 @@ script.src = chrome.runtime.getURL("inject.js");
 //Reset variables at every page load in background.js
 if (window === window.parent){
     chrome.runtime.sendMessage({type: "RESET"},null);
-    setTimeout( ()=>{
-        chrome.runtime.sendMessage({
-            type: "URL",
-            text: document.URL
-        },null);
-    }, 700);
 }
 
 //Send PSSH into background.js

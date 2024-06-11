@@ -2,6 +2,7 @@
 window.psshs=[];
 window.requests=[];
 window.bodys=[];
+window.targetIds=[];
 window.pageURL="";
 window.clearkey="";
 
@@ -63,11 +64,10 @@ chrome.runtime.onMessage.addListener(
         case "RESET":
             location.reload()
             break;
-        case "URL":
-            window.pageURL=request.text
-            break;
         case "PSSH":
             window.psshs.push(request.text)
+            window.pageURL=sender.tab.url
+            window.targetIds=[sender.tab.id, sender.frameId]
             break;
         case "CLEARKEY":
             window.clearkey=request.text
