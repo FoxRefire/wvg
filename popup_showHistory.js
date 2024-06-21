@@ -23,7 +23,7 @@ function backHistory(){
     document.getElementById('toggleHistory').style.display='grid';
     document.getElementById('selectRequest').style.display='none';
     document.getElementById('requestList').style.display='none';
-    if(psshs.length != 0){
+    if(psshs.length){
         document.getElementById('home').style.display='grid';
     } else {
         document.getElementById('noEME').style.display='grid';

@@ -7,7 +7,7 @@ window.pageURL="";
 window.clearkey="";
 
 chrome.storage.local.get("isBlock", (value) => {
-    window.isBlock = value.isBlock ? true : false;
+    window.isBlock = value.isBlock;
 })
 
 function convertHeaders(obj){
@@ -18,11 +18,7 @@ window.blockRules = await fetch("blockRules.conf").then((r)=>r.text());
 blockRules = blockRules.replace(/\n^\s*$|\s*\/\/.*|\s*$/gm, "");
 blockRules = blockRules.split("\n");
 function testBlock(url) {
-    if(window.isBlock){
-        return blockRules.map(e => url.includes(e)).some(e=>e)
-    } else {
-        return false
-    }
+    return window.isBlock && blockRules.map(e => url.includes(e)).some(e=>e);
 }
 
 //Get URL and headers from POST requests
@@ -99,7 +95,7 @@ chrome.runtime.onStartup.addListener(createMenu)
 chrome.contextMenus.onClicked.addListener(item => {
     if(item.menuItemId == "toggleBlocking"){
         chrome.storage.local.get("isBlock", (value) => {
-            if(value.isBlock == true){
+            if(value.isBlock){
                 chrome.storage.local.set({'isBlock': false}, null);
                 chrome.contextMenus.update("toggleBlocking",{title: "Enable License Blocking"})
             } else {
