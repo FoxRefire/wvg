@@ -12,34 +12,34 @@ if (window === window.parent){
 
 //Send PSSH into background.js
 document.addEventListener('pssh', (e) => {
-        chrome.runtime.sendMessage({
-            type: "PSSH",
-            text: e.detail
-        },null);
+    chrome.runtime.sendMessage({
+        type: "PSSH",
+        text: e.detail
+    },null);
 });
 
 //Send Clearkey into background.js
 document.addEventListener('clearkey', (e) => {
-        chrome.runtime.sendMessage({
-            type: "CLEARKEY",
-            text: e.detail
-        },null);
+    chrome.runtime.sendMessage({
+        type: "CLEARKEY",
+        text: e.detail
+    },null);
 });
 
 //Fetch from original origin
 chrome.runtime.onMessage.addListener(
-  function (request, sender, sendResponse) {
-    if(request.type=="FETCH"){
-        let res = fetch(request.u, {
-            method: request.m,
-            headers: JSON.parse(request.h),
-            body: Uint8Array.from(atob(request.b), c => c.charCodeAt(0))
-        }).then((r)=>r.arrayBuffer()).then((r)=>{
-            sendResponse(
-                btoa(String.fromCharCode(...new Uint8Array(r)))
-            );
-        })
+    function (request, sender, sendResponse) {
+        if(request.type=="FETCH"){
+            let res = fetch(request.u, {
+                method: request.m,
+                headers: JSON.parse(request.h),
+                body: Uint8Array.from(atob(request.b), c => c.charCodeAt(0))
+            }).then((r)=>r.arrayBuffer()).then((r)=>{
+                sendResponse(
+                    btoa(String.fromCharCode(...new Uint8Array(r)))
+                );
+            })
+        }
+        return true
     }
-    return true
-  }
 );

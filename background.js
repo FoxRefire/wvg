@@ -40,35 +40,35 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
 
 //Get requestBody from POST requests
 chrome.webRequest.onBeforeRequest.addListener(
- function(details) {
-    if (details.method === "POST") {
-      window.bodys.push({
-          body:details.requestBody.raw ? btoa(String.fromCharCode(...new Uint8Array(details.requestBody.raw[0]['bytes']))) : "",
-          id:details.requestId
-      });
-    }
- },
- {urls: ["<all_urls>"]},
- ["requestBody"]
+    function(details) {
+        if (details.method === "POST") {
+            window.bodys.push({
+                body:details.requestBody.raw ? btoa(String.fromCharCode(...new Uint8Array(details.requestBody.raw[0]['bytes']))) : "",
+                id:details.requestId
+            });
+        }
+    },
+    {urls: ["<all_urls>"]},
+    ["requestBody"]
 );
 
 //Receive PSSH from content.js
 chrome.runtime.onMessage.addListener(
-  function (request, sender, sendResponse) {
-    switch(request.type){
-        case "RESET":
-            location.reload()
-            break;
-        case "PSSH":
-            window.psshs.push(request.text)
-            window.pageURL=sender.tab.url
-            window.targetIds=[sender.tab.id, sender.frameId]
-            break;
-        case "CLEARKEY":
-            window.clearkey=request.text
-            break;
+    function (request, sender, sendResponse) {
+        switch(request.type){
+            case "RESET":
+                location.reload()
+                break;
+            case "PSSH":
+                window.psshs.push(request.text)
+                window.pageURL=sender.tab.url
+                window.targetIds=[sender.tab.id, sender.frameId]
+                break;
+            case "CLEARKEY":
+                window.clearkey=request.text
+                break;
+        }
     }
-  }
 );
 } )()
 
