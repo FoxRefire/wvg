@@ -15,10 +15,9 @@ function convertHeaders(obj){
 }
 
 window.blockRules = await fetch("blockRules.conf").then((r)=>r.text());
-blockRules = blockRules.replace(/\n^\s*$|\s*\/\/.*|\s*$/gm, "");
-blockRules = blockRules.split("\n");
+window.blockRules = window.blockRules.replace(/\n^\s*$|\s*\/\/.*|\s*$/gm, "").split("\n");
 function testBlock(url) {
-    return window.isBlock && blockRules.map(e => url.includes(e)).some(e=>e);
+    return window.isBlock && window.blockRules.some(e => url.includes(e));
 }
 
 //Get URL and headers from POST requests
