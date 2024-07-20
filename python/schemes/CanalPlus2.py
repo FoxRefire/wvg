@@ -1,9 +1,5 @@
-import re
+import xml.etree.ElementTree as ET
 b64challenge = base64.b64encode(challenge).decode()
-res = await (await pyfetch(licUrl,
-method="POST",
-headers=licHeaders,
-body=b64challenge
-)).text()
+res = await corsFetch(licUrl, "POST", licHeaders, b64challenge, "str")
 
-licence = base64.b64decode(re.search(".*(.*)<\/license>", str(res))[2].encode())
+licence = ET.XML(res)[0][0].text
