@@ -40,7 +40,7 @@ async def loadCdm():
         remote_conf=await (await pyfetch("remote.json")).json()
         return RemoteCdm(**remote_conf)
     except Exception as e:
-        js.document.getElementById('result').value="n0suchd3v1c3f113:r3adth3fuck1ngma2ua1\n\n[MPD?]\nhttps://github.com/FoxRefire/wvg?tab=readme-ov-file#instalation"
+        js.document.getElementById('result').value="n0suchd3v1c3f113:r3adth3fuck1ngma2ua1\n\n[MPD?]\nhttps://github.com/FoxRefire/wvg/wiki/Getting-started#2-put-cdm-files"
         raise Exception(e)
 
 # Define corsFetch API for requesting server that require origin header
