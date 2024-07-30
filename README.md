@@ -1,17 +1,15 @@
 ## WVGuesserExtension-NextGen
 
-Looking for legacy version?: https://github.com/FoxRefire/wvg/tree/legacy
-
 #### For more details, see [docs](https://github.com/FoxRefire/wvg/wiki)
 
 ### Installation
 
 1. Download or clone this code
-2. At the same directory of `manifest.json`(root directory of this extension), put the one of the following Android L3 CDM file(s).
+2. At the same directory of `manifest.json`(root directory of this extension), put the one of the following Android L3 CDM key pair file(s).
 
    *Don't know how to get these files? See [How to dump CDM key pair](https://github.com/FoxRefire/wvg/wiki/How-to-dump-CDM-key-pair) for more informations.*
 
-   * Supported CDM Types
+   * Supported CDM Key Pair Formats
 
       1. `device.wvd`
 
