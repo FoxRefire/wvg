@@ -1,7 +1,4 @@
-res = await (await pyfetch(licUrl,
-    method="POST",
-    headers=licHeaders,
-    body=challenge
-)).json()
+res = await corsFetch(licUrl, "POST", licHeaders, challenge, "json")
+
 licence = res['license']
 
