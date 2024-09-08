@@ -72,13 +72,17 @@ chrome.runtime.onMessage.addListener(
 );
 } )()
 
-chrome.browserAction.onClicked.addListener(function(tab) {
-    chrome.windows.create({
-        url: "popup.html",
-        type: "popup",
-        width: 820,
-        height: 600
-    });
+chrome.browserAction.onClicked.addListener(tab => {
+    if(chrome.windows){
+        chrome.windows.create({
+            url: "popup.html",
+            type: "popup",
+            width: 820,
+            height: 600
+        });
+    } else {
+        chrome.tabs.create({url: 'popup.html'})
+    }
 });
 
 function createMenu(){
