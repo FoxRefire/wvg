@@ -1,114 +1,172 @@
-.hidden {
-    display: none;
-}
-
-html, body {
-    display: grid;
+body {
+    background: linear-gradient(to bottom, rgb(14, 116, 144), rgb(21, 94, 117), rgb(22, 78, 99));
     height: 100%;
     width: 100%;
-    margin: 0; /* Reset default margin */
-    padding: 0; /* Reset default padding */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
-body {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background: linear-gradient(45deg, #0d364c, #062535, #02141e);
-    grid-template-rows: auto 1fr auto;
+#updateNoticeExtension {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    gap: 2%;
+    color: black;
 }
 
-#noEME {
-    justify-self: center;
-    align-self: center;
+#updateNoticeExtension a {
+    text-decoration: none;
     color: white;
 }
 
-#updateNotice {
-    justify-self: center;
-    align-self: end;
-    color: white;
+#ckHome {
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
 }
 
-#updateNotice a{
-    color: aqua;
-}
-
-#wvForm {
-    display: grid;
-    grid-template-rows: auto;
-    color: white;
-}
-
-#wvForm label {
-    justify-self: center;
-}
-
-#pssh {
-    width: 80%;
-    justify-self: center;
-}
-
-#psshButton {
-    width: 20%;
-    justify-self: center;
-}
-
-#license {
-    width: 80%;
-    justify-self: center;
-}
-
-#licenseButton {
-    width: 20%;
-    justify-self: center;
-}
-
-#scheme {
-    width: 80%;
-    justify-self: center;
-}
-
-#toggleHistory {
-    display: grid;
-}
-
-#toggleHistory button {
-    width: 20%;
-    height: auto;
-}
-
-#guess {
-    width: 20%;
-    justify-self: center;
-    margin-top: 5%;
-}
-
-#result {
-    width: 90%;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    resize: none;
-    justify-self: center;
-}
-
-#psshList, #requestList {
-    color: white;
-}
-
-#ckHome h3, label {
-    color: white;
-    justify-self: center;
-}
-
-#ckHome label {
-    align-self: end;
+#h3, label {
+    flex-shrink: 1;
 }
 
 #ckResult {
-    width: 90%;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    width: 70%;
+    height: 50%;
+    overflow: hidden;
     resize: none;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 1%;
+    outline: none;
+    color: white;
+}
+
+#wvForm {
+    flex-direction: column;
+    align-self: center;
     justify-self: center;
+    width: 100%;
+    height: 100%;
+    gap: 1%;
+}
+
+#wvHome {
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+
+#history {
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+#histButtons {
+    flex-shrink: 1;
+}
+
+#histDisp {
+    flex-grow: 1;
+}
+
+#selectPssh {
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+#selectRequest {
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+#requestList {
+    overflow-y: scroll;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 1%;
+    outline: none;
+    color: white;
+    padding: 2%;
+    width: 100%;
+    height: 100%;
+}
+
+#psshList {
+    overflow-y: scroll;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 1%;
+    outline: none;
+    color: white;
+    padding: 2%;
+    width: 100%;
+    height: 100%;
+}
+
+#noEME {
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+
+#wvHomePSSHLines {
+    display: flex;
+    flex-direction: row;
+    color: black;
+    gap: 1%;
+}
+
+#pssh {
+    flex-grow: 1;
+}
+
+#wvHomeLicenseLine {
+    color: black;
+    flex-direction: row;
+    display: flex;
+    gap: 1%;
+}
+
+#license {
+    flex-grow: 1;
+}
+
+#wvHomeSchemeLine {
+    display: flex;
+    flex-direction: row;
+    color: black;
+    gap: 1%;
+}
+
+#scheme {
+    flex-grow: 1;
+}
+
+#wvHomeResultLine {
+    display: flex;
+    justify-self: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1%;
+}
+
+#result {
+    resize: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 1%;
+    outline: none;
+    width: 60%;
+    text-align: center;
+    color: white;
+}
+
+#ckResult {
+
 }

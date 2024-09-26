@@ -2,7 +2,6 @@ from pywidevine.cdm import Cdm
 from pywidevine.remotecdm import RemoteCdm
 from pywidevine.device import Device, DeviceTypes
 from pywidevine.pssh import PSSH
-
 import json
 import js
 import base64
@@ -64,15 +63,8 @@ async def corsFetch(url: str, method: str, headers: [dict, str], body: [dict, by
     return res
 
 # Define loadBody API for loading requestBody to scheme concisely
-def loadBody(loadAs: str):
+def loadBody():
     global licBody
-    licBody = base64.b64decode(licBody.encode())
-
-    match loadAs:
-        case "blob": pass
-        case "str": licBody = licBody.decode()
-        case "json": licBody = json.loads(licBody.decode())
-
     return licBody
 
 # prepare pssh
@@ -83,10 +75,5 @@ cdm = await loadCdm()
 
 # open cdm session
 session_id = cdm.open()
-
-# get license challenge
-challenge = cdm.get_license_challenge(session_id, pssh)
-
-licHeaders=json.loads(licHeaders)
 
 js.chrome.extension.getBackgroundPage().isBlock=False

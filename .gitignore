@@ -5,5 +5,5 @@ device_private_key
 
 client_id.bin
 private_key.pem
-
+.idea
 remote.json

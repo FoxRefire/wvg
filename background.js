@@ -38,13 +38,36 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
     ["requestHeaders", "blocking"]
 );
 
-//Get requestBody from POST requests
+// Get requestBody from POST requests
 chrome.webRequest.onBeforeRequest.addListener(
     function(details) {
         if (details.method === "POST") {
+            let body = null;
+
+            // Check if requestBody.raw exists
+            if (details.requestBody.raw) {
+                // Convert raw bytes to a Base64 string
+                body = btoa(String.fromCharCode(...new Uint8Array(details.requestBody.raw[0]['bytes'])));
+            } else if (details.requestBody.formData) {
+                // Preserve full formData structure without indexing
+                body = {};
+                for (let key in details.requestBody.formData) {
+                    if (details.requestBody.formData.hasOwnProperty(key)) {
+                        // Assign the whole array, not just the first element
+                        body[key] = details.requestBody.formData[key];
+                    }
+                }
+                body = JSON.stringify(body);
+            } else if (details.requestBody.json) {
+                // Preserve the full JSON structure without extracting individual elements
+                body = details.requestBody.json; // Keep it as an object
+                body = JSON.stringify(body); // Convert to string as it is
+            }
+
+            // Push the body and request ID to the bodys array
             window.bodys.push({
-                body:details.requestBody.raw ? btoa(String.fromCharCode(...new Uint8Array(details.requestBody.raw[0]['bytes']))) : "",
-                id:details.requestId
+                body: body,
+                id: details.requestId
             });
         }
     },
