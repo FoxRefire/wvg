@@ -171,4 +171,22 @@ body {
 .json-container {
     display: flex;
     flex-direction: column;
+    color: black !important;
+    background-color: unset !important;
+}
+.json-key {
+    color:black !important;
+
+}
+.json-boolean{
+    color:yellow !important;
+}
+.json-container .json-string{
+    color:white !important;
+}
+.json-container .fa-caret-down{
+    border-color:white rgba(0,0,0,0) !important;
+}
+.json-container .fa-caret-right{
+    border-color:rgba(0,0,0,0) rgba(0,0,0,0) rgba(0,0,0,0) white !important;
 }
