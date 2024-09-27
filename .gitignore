@@ -1,8 +1,6 @@
 device.wvd
-
 device_client_id_blob
 device_private_key
-
 client_id.bin
 private_key.pem
 .idea

@@ -1,8 +1,8 @@
 import urllib.parse
-service_cert = "CAUSwgUKvAIIAxIQCuQRtZRasVgFt7DIvVtVHBi17OSpBSKOAjCCAQoCggEBAKU2UrYVOSDlcXajWhpEgGhqGraJtFdUPgu6plJGy9ViaRn5mhyXON5PXmw1krQdi0SLxf00FfIgnYFLpDfvNeItGn9rcx0RNPwP39PW7aW0Fbqi6VCaKWlR24kRpd7NQ4woyMXr7xlBWPwPNxK4xmR/6UuvKyYWEkroyeIjWHAqgCjCmpfIpVcPsyrnMuPFGl82MMVnAhTweTKnEPOqJpxQ1bdQvVNCvkba5gjOTbEnJ7aXegwhmCdRQzXjTeEV2dO8oo5YfxW6pRBovzF6wYBMQYpSCJIA24ptAP/2TkneyJuqm4hJNFvtF8fsBgTQQ4TIhnX4bZ9imuhivYLa6HsCAwEAAToPYW1hem9uLmNvbS1wcm9kEoADETQD6R0H/h9fyg0Hw7mj0M7T4s0bcBf4fMhARpwk2X4HpvB49bJ5Yvc4t41mAnXGe/wiXbzsddKMiMffkSE1QWK1CFPBgziU23y1PjQToGiIv/sJIFRKRJ4qMBxIl95xlvSEzKdt68n7wqGa442+uAgk7CXU3uTfVofYY76CrPBnEKQfad/CVqTh48geNTb4qRH1TX30NzCsB9NWlcdvg10pCnWSm8cSHu1d9yH+2yQgsGe52QoHHCqHNzG/wAxMYWTevXQW7EPTBeFySPY0xUN+2F2FhCf5/A7uFUHywd0zNTswh0QJc93LBTh46clRLO+d4RKBiBSj3rah6Y5iXMw9N9o58tCRc9gFHrjfMNubopWHjDOO3ATUgqXrTp+fKVCmsGuGl1ComHxXV9i1AqHwzzY2JY2vFqo73jR3IElr6oChPIwcNokmNc0D4TXtjE0BoYkbWKJfHvJJihzMOvDicWUsemVHvua9/FBtpbHgpbgwijFPjtQF9Ldb8Swf"
-cdm.set_service_certificate(session_id=session_id, certificate=service_cert)
-challenge = cdm.get_license_challenge(session_id, pssh)
-licHeaders = json.loads(licHeaders)
-payload = f"widevine2Challenge={urllib.parse.quote(base64.b64encode(challenge).decode())}&includeHdcpTestKeyInLicense=true"
+payload = f'widevine2Challenge={urllib.parse.quote(base64.b64encode(cdm.service_certificate_challenge).decode())}&includeHdcpTestKeyInLicense=true'
+service_cert = await corsFetch(licUrl, "POST", licHeaders, payload, "json")
+service_cert = service_cert['widevine2License']['license']
+getChallenge('b64', service_cert)
+payload = f'widevine2Challenge={urllib.parse.quote(getChallenge("b64", service_cert))}&includeHdcpTestKeyInLicense=true'
 licence = await corsFetch(licUrl, "POST", licHeaders, payload, "json")
 licence = licence['widevine2License']['license']
