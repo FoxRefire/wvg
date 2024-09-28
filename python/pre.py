@@ -75,6 +75,22 @@ def loadBody(loadAs: str):
 
     return licBody
 
+# Define a function to get challenge if needed to set a service cert
+def getChallenge(getAs, *cert):
+    global session_id
+    global pssh
+
+    if bool(cert):
+        cdm.set_service_certificate(session_id, cert[0])
+
+    challenge = cdm.get_license_challenge(session_id, pssh)
+
+    match getAs:
+        case "blob": pass
+        case "b64": challenge = base64.b64encode(challenge).decode()
+        case "list": challenge = list(challenge)
+    return challenge
+
 # prepare pssh
 pssh = PSSH(pssh)
 

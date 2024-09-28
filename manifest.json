@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "name": "Widevine L3 Guessor 2024",
+    "name": "Widevine L3 Decrypter",
     "version": "240731.1",
     "version_name": "a1297aa",
     "icons": {
@@ -28,7 +28,7 @@
         }
     ],
     "browser_action": {
-        "default_title": "Widevine Guessor"
+        "default_title": "Widevine Decrypter"
     },
     "web_accessible_resources": ["inject.js"],
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
