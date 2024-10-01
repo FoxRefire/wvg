@@ -1,1 +1,1 @@
-licence = await corsFetch(licUrl, "POST", licHeaders, challenge, "blob")
+licence = await corsFetch(licUrl, "POST", licHeaders, getChallenge('blob'), "blob")

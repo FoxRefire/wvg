@@ -1,7 +1,3 @@
 payload = loadBody("json")
-
-challengeArr = list(challenge)
-payload['drm_info'] = challengeArr
-
+payload['drm_info'] = getChallenge('list')
 licence = await corsFetch(licUrl, "POST", licHeaders, payload, "blob")
-
