@@ -40,7 +40,7 @@ async def loadCdm():
         remote_conf=await (await pyfetch("remote.json")).json()
         return RemoteCdm(**remote_conf)
     except Exception as e:
-        js.document.getElementById('result').value=f"No CDM found! \n\n https://github.com/FoxRefire/wvg/wiki/Getting-started#2-put-cdm-files"
+        js.document.getElementById('result').value=f"No CDM key pair found! \n\n https://github.com/FoxRefire/wvg/wiki/Getting-started#2-put-cdm-key-pair-files"
         raise Exception(e)
 
 # Define corsFetch API for requesting server that require origin header
