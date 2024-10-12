@@ -1,133 +1,89 @@
-<!-- HTML -->
-<html lang="en">
-
-  <!-- Heading -->
+<html>
   <head>
     <meta charset="UTF-8">
-    <title>Widevine L3 Decrypter</title>
+    <title>Widevine L3 Guessor 2024</title>
     <link rel="stylesheet" href="style.css">
     <script src="pyodide/pyodide.js"></script>
   </head>
-
-  <!-- Body -->
   <body>
-
-
-
-    <!-- noEME -->
-    <div id="noEME">
-      Widevine content hasn't detected in this page.
-      <br>
-      Open Widevine protected website and try again!
+    <div id="toggleHistory">
+      <button id="historyButton">Show History</button><br><br>
     </div>
-
-    <!-- Main -->
-    <div id="wvHome" >
-
-      <!-- Decryption forms -->
+    <div id="noEME">
+      Widevine content hasn't detected in this page.<br>
+      Open widevine-protected website and try again!
+    </div>
+    <div id="home" class="hidden">
       <form id="wvForm">
+        <label for="pssh">PSSH</label>
+        <input type="text" id="pssh" disabled/>
+        <input type="hidden" id="psshIndex" />
+        <input type="button" id="psshButton" value="Select" /><br>
 
-        <!-- PSSH line -->
-        <div id="wvHomePSSHLines">
-          <label for="pssh">PSSH</label>
-          <input type="text" id="pssh" disabled/>
-          <input type="hidden" id="psshIndex" />
-          <input type="button" id="psshButton" value="Select" />
-          <br>
-        </div>
+        <label for="license">License URL</label>
+        <input type="text" id="license" disabled/>
+        <input type="hidden" id="licenseIndex" />
+        <input type="button" id="licenseButton" value="Select" /><br>
 
-        <!-- License URL line -->
-        <div id="wvHomeLicenseLine">
-          <label for="license">License URL</label>
-          <input type="text" id="license" disabled/>
-          <input type="hidden" id="licenseIndex" />
-          <input type="button" id="licenseButton" value="Select" />
-          <br>
-        </div>
+        <label for="scheme">Challenge scheme</label>
+        <select id="scheme">
+          <option value="Amazon">Amazon</option>
+          <option value="Allente">Allente</option>
+          <option value="CanalPlusVOD">CanalPlus (VOD)</option>
+          <option value="CanalPlusLive">CanalPlus (Live)</option>
+          <option value="Comcast">Comcast Xfinity</option>
+          <option value="CommonWV" selected>CommonWV</option>
+          <option value="DRMToday">DRMToday</option>
+          <option value="Fantop">Fantop</option>
+          <option value="GlobalTV">GlobalTV</option>
+          <option value="moTV">moTV</option>
+          <option value="NosTV">NosTV</option>
+          <option value="oqee">Oqee</option>
+          <option value="PolSatBoxGo">PolSatBoxGo</option>
+          <option value="RedBee">Red Bee Media</option>
+          <option value="Sling">Sling</option>
+          <option value="thePlatform">thePlatform</option>
+          <option value="VdoCipher">VdoCipher</option>
+          <option value="VUDRM">VUDRM</option>
+          <option value="Vodafone">Vodafone</option>
+          <option value="Youku">Youku</option>
+          <option value="YouTube">YouTube</option>
+        </select>
 
-        <!-- Scheme line -->
-        <div id="wvHomeSchemeLine">
-          <label for="scheme">Challenge scheme</label>
-            <select id="scheme">
-              <option value="Amazon">Amazon</option>
-              <option value="Allente">Allente</option>
-              <option value="CanalPlusVOD">CanalPlus (VOD)</option>
-              <option value="CanalPlusLive">CanalPlus (Live)</option>
-              <option value="Comcast">Comcast Xfinity</option>
-              <option value="CommonWV" selected>CommonWV</option>
-              <option value="DRMToday">DRMToday</option>
-              <option value="Fantop">Fantop</option>
-              <option value="GlobalTV">GlobalTV</option>
-              <option value="moTV">moTV</option>
-              <option value="NosTV">NosTV</option>
-              <option value="oqee">Oqee</option>
-              <option value="PolSatBoxGo">PolSatBoxGo</option>
-              <option value="RedBee">Red Bee Media</option>
-              <option value="Sling">Sling</option>
-              <option value="thePlatform">thePlatform</option>
-              <option value="VdoCipher">VdoCipher</option>
-              <option value="VUDRM">VUDRM</option>
-              <option value="Vodafone">Vodafone</option>
-              <option value="Youku">Youku</option>
-              <option value="YouTube">YouTube</option>
-            </select>
-          <input type="button" id="guess" value="Decrypt">
-          <br>
-        </div>
+        <input type="button" id="guess" value="Guess!"><br>
 
-        <!-- Result line -->
-        <div id="wvHomeResultLine">
-          <label for="result">Result:</label><br>
-          <textarea id="result" rows="10" cols="50" readonly></textarea>
-        </div>
+        <label for="result">Result:</label><br>
+        <textarea id="result" rows="10" cols="50"></textarea>
 
       </form>
-      <button id="historyButton">Show History</button>
     </div>
-
-    <!-- Clearkey -->
-    <div id="ckHome">
+    <div id="ckHome" class="hidden">
       <h3>Clearkey detected</h3>
-      <label for="ckResult">Result:</label>
-      <textarea id="ckResult" rows="10" cols="50" readonly></textarea>
+      <label for="ckResult">Result:</label><br>
+      <textarea id="ckResult" rows="10" cols="50"></textarea>
     </div>
-
-    <!-- PSSH Selection -->
-    <div id="selectPssh">
-      <label for="psshSearch"></label>
-      <input type="text" id="psshSearch" placeholder="Search for PSSH">
+    <div id="selectPssh" class="hidden">
+      <input type="text" id="psshSearch" placeholder="Search">
       <ul id="psshList"></ul>
     </div>
-
-    <!-- License URL Selection -->
-    <div id="selectRequest">
-      <label for="requestSearch"></label>
-      <input type="text" id="requestSearch" placeholder="Search for License request">
+    <div id="selectRequest" class="hidden">
+      <input type="text" id="requestSearch" placeholder="Search">
       <ul id="requestList"></ul>
     </div>
-
-    <!-- History -->
-    <div id="history">
+    <div id="history" class="hidden">
+      <button id="backHistory">🔙 Back</button>
+      <button id="saveHistory">💾 Save History</button>
+      <button id="clearHistory">❌ Clear History</button>
       <div id="histDisp"></div>
-      <div id="histButtons">
-        <button class="text-red-600" id="backHistory">🔙 Back</button>
-        <button id="saveHistory">💾 Save History</button>
-        <button id="clearHistory">❌ Clear History</button>
-      </div>
     </div>
-
-    <!-- Update notice -->
-    <div id="updateNoticeExtension">
+    <div id="updateNotice" class="hidden">
       Version =VER= update available!
-      <a href="https://github.com/FoxRefire/wvg/archive/=HASH=.zip"> Download</a>
+      <a href="https://github.com/FoxRefire/wvg/archive/=HASH=.zip">Download</a>
     </div>
   </body>
-
-  <!-- Scripts -->
   <script src="popup.js" type="module"></script>
   <script src="popup_drawList.js"></script>
   <script src="jsonview.js"></script>
   <script src="popup_showHistory.js"></script>
   <script src="popup_updateNotice.js"></script>
-
 </html>

@@ -4,18 +4,20 @@ function showHistory(){
         let tree=jsonview.renderJSON(JSON.stringify(data), document.getElementById('histDisp'));
         jsonview.toggleNode(tree);
     }));
-    document.getElementById('wvHome').style.display='none';
+    document.getElementById('home').style.display='none';
     document.getElementById('noEME').style.display='none';
-    document.getElementById('history').style.display='flex';
+    document.getElementById('history').style.display='grid';
+    document.getElementById('toggleHistory').style.display='none';
 }
 
 function backHistory(){
     document.getElementById('histDisp').innerHTML="";
     document.getElementById('history').style.display='none';
+    document.getElementById('toggleHistory').style.display='grid';
     if(psshs.length){
-        document.getElementById('wvHome').style.display='flex';
+        document.getElementById('home').style.display='grid';
     } else {
-        document.getElementById('noEME').style.display='none';
+        document.getElementById('noEME').style.display='grid';
     }
 }
 

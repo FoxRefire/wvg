@@ -74,30 +74,16 @@ async function autoSelect(){
 
 if (clearkey) {
     document.getElementById('noEME').style.display = 'none';
-    document.getElementById('wvHome').style.display = 'none';
-    document.getElementById('ckHome').style.display = 'flex';
-    document.getElementById('history').style.display = 'none'
-    document.getElementById('selectPssh').style.display = 'none';
-    document.getElementById('selectRequest').style.display = 'none';
+    document.getElementById('ckHome').style.display = 'grid';
     document.getElementById('ckResult').value = clearkey;
     document.getElementById('ckResult').addEventListener("click", copyResult);
     document.getElementById('toggleHistory').style.display = 'none'
 } else if (psshs.length) {
-    document.getElementById('wvHome').style.display = 'flex';
     document.getElementById('noEME').style.display = 'none';
-    document.getElementById('ckHome').style.display = 'none';
-    document.getElementById('history').style.display = 'none';
+    document.getElementById('home').style.display = 'grid';
     document.getElementById('guess').addEventListener("click", guess);
     document.getElementById('result').addEventListener("click", copyResult);
     drawList(psshs, 'psshSearch', 'psshList', 'pssh');
     drawList(requests.map(r => r['url']), 'requestSearch', 'requestList', 'license');
     autoSelect();
-}
-else {
-    document.getElementById('noEME').style.display = 'flex';
-    document.getElementById('wvHome').style.display = 'none';
-    document.getElementById('ckHome').style.display = 'none';
-    document.getElementById('selectPssh').style.display = 'none';
-    document.getElementById('selectRequest').style.display = 'none';
-    document.getElementById('history').style.display = 'none';
 }
