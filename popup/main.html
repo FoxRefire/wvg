@@ -7,7 +7,8 @@
   </head>
   <body>
     <div id="toggleHistory">
-      <button id="historyButton">Show History</button><br><br>
+      <a href="./history.html"><button>Show History</button></a>
+      <br><br>
     </div>
     <div id="noEME">
       Widevine content hasn't detected in this page.<br>
@@ -70,12 +71,6 @@
       <input type="text" id="requestSearch" placeholder="Search">
       <ul id="requestList"></ul>
     </div>
-    <div id="history" class="hidden">
-      <button id="backHistory">🔙 Back</button>
-      <button id="saveHistory">💾 Save History</button>
-      <button id="clearHistory">❌ Clear History</button>
-      <div id="histDisp"></div>
-    </div>
     <div id="updateNotice" class="hidden">
       Version =VER= update available!
       <a href="https://github.com/FoxRefire/wvg/archive/=HASH=.zip">Download</a>
@@ -83,7 +78,5 @@
   </body>
   <script src="./main.js" type="module"></script>
   <script src="./drawList.js"></script>
-  <script src="/libs/jsonview.js"></script>
-  <script src="./showHistory.js"></script>
   <script src="./updateNotice.js"></script>
 </html>
