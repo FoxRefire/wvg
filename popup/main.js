@@ -60,7 +60,8 @@ async function autoSelect(){
         let search = requests.map(r => r['url']).findIndex(e => e.includes(item[0]));
         if(search>=0){
             if(item[1]) document.getElementById("scheme").value = item[1];
-            requestList.children[search].click();
+            userInputs["license"]=search;
+            document.getElementById("license").value=requests[search]['url'];
             break;
         }
     }
@@ -68,7 +69,8 @@ async function autoSelect(){
         document.getElementById('pssh').value=psshs[0];
     }
     if(requests.length==1){
-        requestList.children[0].click();
+        userInputs["license"]=0;
+        document.getElementById("license").value=requests[search]['url'];
     }
 }
 
@@ -83,7 +85,5 @@ if (clearkey) {
     document.getElementById('home').style.display = 'grid';
     document.getElementById('guess').addEventListener("click", guess);
     document.getElementById('result').addEventListener("click", copyResult);
-    drawList(psshs, 'psshSearch', 'psshList', 'pssh');
-    drawList(requests.map(r => r['url']), 'requestSearch', 'requestList', 'license');
     autoSelect();
 }

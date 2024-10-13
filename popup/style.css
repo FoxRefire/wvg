@@ -92,7 +92,7 @@ body {
     justify-self: center;
 }
 
-#psshList, #requestList {
+#chooserContainer {
     color: white;
 }
 

@@ -1,48 +1,40 @@
-function selectPssh(){
-    document.getElementById('home').style.display='none';
-    document.getElementById('selectPssh').style.display='grid';
-    document.getElementById('psshList').style.display='grid';
-    document.getElementById('toggleHistory').style.display='none';
-}
+let psshs=chrome.extension.getBackgroundPage().psshs;
+let requests=chrome.extension.getBackgroundPage().requests;
+var userInputs={};
 
-function selectRequest(){
-    document.getElementById('home').style.display='none';
-    document.getElementById('selectRequest').style.display='grid';
-    document.getElementById('requestList').style.display='grid';
-    document.getElementById('toggleHistory').style.display='none';
-}
+document.getElementById('psshButton').addEventListener("click", () => drawList(psshs, 'pssh'));
+document.getElementById('licenseButton').addEventListener("click", () => drawList(requests.map(r => r['url']), 'license'));
 
-document.getElementById('psshButton').addEventListener("click", selectPssh);
-document.getElementById('licenseButton').addEventListener("click", selectRequest);
+function writeListElement(items, outputVar, searchStr) {
+    document.getElementById("items").innerHTML = '';
 
-function writeListElement(arrElements, list, outputVar, search) {
-    list.innerHTML = '';
-    arrElements.forEach((element, index) => {
-        if (!search || element.includes(searchValue)) {
+    items.forEach((item, index) => {
+        if (!searchStr || item.includes(searchStr)) {
             const li = document.createElement('li');
-            li.textContent = element;
-            li.addEventListener('click', () => {
-                userInputs[outputVar]=index;
-                document.getElementById(outputVar).value=element;
-                document.getElementById('selectPssh').style.display='none';
-                document.getElementById('selectRequest').style.display='none';
-                document.getElementById('home').style.display='grid';
-                document.getElementById('toggleHistory').style.display='grid';
-            });
-            list.appendChild(li);
+            li.textContent = item;
+            li.addEventListener('click', () => itemSelected(index, item, outputVar));
+            document.getElementById("items").appendChild(li);
         }
     });
 }
 
-var userInputs={};
-function drawList(arrElements,searchBoxElmId,listElmId,outputVar) {
-    const searchBox = document.getElementById(searchBoxElmId);
-    const list = document.getElementById(listElmId);
+function drawList(items, outputVar) {
+    document.getElementById('home').style.display='none';
+    document.getElementById('chooserContainer').style.display='grid';
+    document.getElementById('toggleHistory').style.display='none';
 
-    writeListElement(arrElements, list, outputVar, null)
-
-    searchBox.addEventListener('input', (event) => {
-        const searchValue = event.target.value.toLowerCase();
-        writeListElement(arrElements, list, outputVar, searchValue)
+    writeListElement(items, outputVar, null)
+    document.getElementById("chooserSearch").addEventListener('input', event => {
+        const searchStr = event.target.value.toLowerCase();
+        writeListElement(items, outputVar, searchStr)
     });
+}
+
+function itemSelected(index, item, outputVar){
+    userInputs[outputVar]=index;
+    document.getElementById(outputVar).value=item;
+    document.getElementById('chooserContainer').style.display='none';
+    document.getElementById('home').style.display='grid';
+    document.getElementById('toggleHistory').style.display='grid';
+    document.getElementById("chooserSearch").value=""
 }
