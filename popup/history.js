@@ -7,16 +7,13 @@ function showHistory(){
 }
 
 function saveHistory(){
-    chrome.storage.local.get(null, ((data) => {
+    chrome.storage.local.get(null, (data => {
         let blob = new Blob([JSON.stringify(data, null, "\t")], {type: "text/plain"});
         let blobLink = URL.createObjectURL(blob);
         let a = document.createElement('a');
         a.download = 'wvgHistory.json';
         a.href = blobLink
-        document.body.appendChild(a);
         a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(blobLink);
     }));
 }
 
