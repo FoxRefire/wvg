@@ -24,7 +24,6 @@ function writeListElement(arrElements, list, outputVar, search) {
             li.addEventListener('click', () => {
                 userInputs[outputVar]=index;
                 document.getElementById(outputVar).value=element;
-                document.getElementById(outputVar+'Index').value=index;
                 document.getElementById('selectPssh').style.display='none';
                 document.getElementById('selectRequest').style.display='none';
                 document.getElementById('home').style.display='grid';
