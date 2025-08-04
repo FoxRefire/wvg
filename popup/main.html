@@ -24,6 +24,13 @@
         <input type="text" id="license" disabled/>
         <input type="button" id="licenseButton" value="Select" /><br>
 
+        <label for="title">Title</label>
+        <input type="text" id="title"><br>
+        <label for="manifest">Manifest</label>
+        <select id="manifest"></select><br>
+        <label for="command">Cmd</label>
+        <textarea id="command" rows="3" cols="50"></textarea><br>
+        
         <label for="schemeSelect">Challenge scheme</label>
         <select id="schemeSelect">
           <option value="Amazon">Amazon</option>
@@ -57,6 +64,19 @@
         <textarea id="result" rows="10" cols="50"></textarea>
 
       </form>
+      <fieldset id="settings">
+        <legend>Settings</legend>
+        <input type="checkbox" id="use-shaka">
+        <label for="use-shaka"> Use Shaka Packager</label><br>
+        <input type="checkbox" id="set-filename-from-title">
+        <label for="set-filename-from-title"> Set Filename from Title</label><br>
+        <input type="checkbox" id="use-select-video">
+        <label for="use-select-video"> Select Video: </label>
+        <input type="text" class="text-box" id="select-video-param"><br>
+        <input type="checkbox" id="use-select-audio">
+        <label for="use-select-audio"> Select Audio: </label>
+        <input type="text" class="text-box" id="select-audio-param">
+      </fieldset>
     </div>
     <div id="ckHome" class="hidden">
       <h3>Clearkey detected</h3>

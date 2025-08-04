@@ -44,7 +44,7 @@ body {
     justify-self: center;
 }
 
-#pssh, #license, #schemeSelect {
+#pssh, #license, #title, #manifest, #command, #schemeSelect {
     width: 80%;
     justify-self: center;
 }
@@ -77,7 +77,7 @@ body {
     justify-self: center;
 }
 
-#chooserContainer {
+#chooserContainer, #settings {
     color: white;
 }
 

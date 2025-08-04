@@ -4,7 +4,9 @@ window.requests=[];
 window.bodys=[];
 window.targetIds=[];
 window.pageURL="";
+window.title = "";   
 window.clearkey="";
+window.manifests = [];
 
 chrome.storage.local.get("isBlock", (value) => {
     window.isBlock = value.isBlock;
@@ -62,11 +64,16 @@ chrome.runtime.onMessage.addListener(
             case "PSSH":
                 window.psshs.push(request.text)
                 window.pageURL=sender.tab.url
+                window.title = sender.tab.title
                 window.targetIds=[sender.tab.id, sender.frameId]
                 break;
             case "CLEARKEY":
                 window.clearkey=request.text
                 break;
+            case "MANIFEST":
+                window.manifests.push(JSON.parse(request.text))
+                break;
+
         }
     }
 );

@@ -1,8 +1,17 @@
+import { SettingsManager } from "./settingManager.js";
+
 let psshs=chrome.extension.getBackgroundPage().psshs;
 let requests=chrome.extension.getBackgroundPage().requests;
 let pageURL=chrome.extension.getBackgroundPage().pageURL;
+let title=chrome.extension.getBackgroundPage().title;
 let targetIds=chrome.extension.getBackgroundPage().targetIds;
 let clearkey=chrome.extension.getBackgroundPage().clearkey;
+let manifests = chrome.extension.getBackgroundPage().manifests;
+
+async function createCommand() {
+    const header_string = Object.entries(JSON.parse(requests[userInputs['license']]['headers'])).filter(([key, value]) => key != 'Host').map(([key, value]) => `-H "${key}: ${value.replace(/"/g, "'")}"`).join(' ');
+    return `N_m3u8DL-RE "${manifest_list.value}" ${header_string} ${document.getElementById('result').value.split('\n').filter(key => key != '').map(key => `--key ${key}`).join(' ')} ${await SettingsManager.getUseShakaPackager() ? "--use-shaka-packager " : ""}-M format=mkv${await SettingsManager.getSetFilenameFromTitle() && title ? " --save-name ".concat('"', title, '"') : ""}${await SettingsManager.getUseSelectVideo() ? " --select-video ".concat(await SettingsManager.getSelectVideoParam()) : ""}${await SettingsManager.getUseSelectAudio() ? " --select-audio ".concat(await SettingsManager.getSelectAudioParam()) : ""}`;
+}
 
 async function guess(){
     //Be patient!
@@ -35,7 +44,9 @@ async function guess(){
 
     //All Done!
     document.body.style.cursor = "auto";
-    document.getElementById("guess").disabled=false
+    document.getElementById("guess").disabled = false
+    command.value = await createCommand();
+    command.disabled = false;
 }
 
 function copyResult(){
@@ -55,6 +66,7 @@ async function autoSelect(){
     userInputs["license"]=0;
     document.getElementById("license").value=requests[0]['url'];
     document.getElementById('pssh').value=psshs[0];
+    document.getElementById('title').value = title;
     
     let selectRules = await fetch("/selectRules.conf").then((r)=>r.text());
     //Remove blank lines, comment-outs, and trailing spaces at the end of lines
@@ -83,5 +95,57 @@ if (clearkey) {
     document.getElementById('home').style.display = 'grid';
     document.getElementById('guess').addEventListener("click", guess);
     document.getElementById('result').addEventListener("click", copyResult);
+    document.getElementById('command').addEventListener("click", copyResult);
     autoSelect();
 }
+
+document.addEventListener('DOMContentLoaded', async function () {
+    use_shaka.checked = await SettingsManager.getUseShakaPackager();
+    set_filename_from_title.checked = await SettingsManager.getSetFilenameFromTitle();
+    use_select_video.checked = await SettingsManager.getUseSelectVideo();
+    select_video_param.value = await SettingsManager.getSelectVideoParam();
+    use_select_audio.checked = await SettingsManager.getUseSelectAudio();
+    select_audio_param.value = await SettingsManager.getSelectAudioParam();
+});
+
+const use_shaka = document.getElementById('use-shaka');
+use_shaka.addEventListener('change', async function (){
+    await SettingsManager.saveUseShakaPackager(use_shaka.checked);
+});
+
+const set_filename_from_title = document.getElementById('set-filename-from-title');
+set_filename_from_title.addEventListener('change', async function () {
+    await SettingsManager.saveSetFilenameFromTitle(set_filename_from_title.checked);
+});
+
+const use_select_video = document.getElementById('use-select-video');
+use_select_video.addEventListener('change', async function (){
+    await SettingsManager.saveUseSelectVideo(use_select_video.checked);
+});
+
+const select_video_param = document.getElementById('select-video-param');
+select_video_param.addEventListener('input', async function (event) {
+    await SettingsManager.saveSelectVideoParam(select_video_param.value);
+});
+
+const use_select_audio = document.getElementById('use-select-audio');
+use_select_audio.addEventListener('change', async function () {
+    await SettingsManager.saveUseSelectAudio(use_select_audio.checked);
+});
+
+const select_audio_param = document.getElementById('select-audio-param');
+select_audio_param.addEventListener('input', async function (event) {
+    await SettingsManager.saveSelectAudioParam(select_audio_param.value);
+});
+
+const command = document.getElementById('command');
+command.disabled = true;
+const manifest_list = document.getElementById('manifest');
+manifest_list.addEventListener('change', async () => {
+    command.value = await createCommand();
+});
+manifests.forEach(element => {
+    const option = new Option(`[${element.type}] ${element.url}`, element.url, element.type.startsWith('DASH'), element.type.startsWith('DASH'));
+    manifest_list.add(option);
+});
+

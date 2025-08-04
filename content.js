@@ -26,6 +26,13 @@ document.addEventListener('clearkey', (e) => {
     },null);
 });
 
+document.addEventListener('manifest', (e) => {
+    chrome.runtime.sendMessage({
+        type: "MANIFEST",
+        text: e.detail
+    },null);
+});
+
 //Fetch from original origin
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
