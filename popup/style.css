@@ -1,99 +1,378 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&display=swap');
+
+:root {
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --primary: #38bdf8;
+    --accent-gradient: linear-gradient(90deg, #38bdf8, #818cf8);
+    --text-main: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --radius: 8px;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 800px;
+    height: 520px;
+    background: var(--bg-gradient);
+    color: var(--text-main);
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 12px;
+}
+
 .hidden {
     display: none;
 }
 
-html, body {
-    display: grid;
-    height: 100%;
-    width: 100%;
-    margin: 0; /* Reset default margin */
-    padding: 0; /* Reset default padding */
+#home.hidden, #noEME.hidden, #ckHome.hidden, #chooserContainer.hidden, #editSchemeContainer.hidden, .hidden {
+    display: none;
 }
 
-body {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background: linear-gradient(45deg, #0d364c, #062535, #02141e);
-    grid-template-rows: auto 1fr auto;
+#home, #ckHome, #chooserContainer, #editSchemeContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
 }
 
 #noEME {
-    justify-self: center;
-    align-self: center;
-    color: white;
-}
-
-#updateNotice {
-    justify-self: center;
-    align-self: end;
-    color: white;
-}
-
-#updateNotice a{
-    color: aqua;
-}
-
-#wvForm {
-    display: grid;
-    grid-template-rows: auto;
-    color: white;
-}
-
-#wvForm label {
-    justify-self: center;
-}
-
-#pssh, #license, #schemeSelect {
-    width: 80%;
-    justify-self: center;
-}
-
-#psshButton, #licenseButton, #editSchemeButton {
-    width: 20%;
-    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 40px 10px;
+    flex: 1;
 }
 
 #toggleHistory {
-    display: grid;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 4px;
 }
 
 #toggleHistory button {
-    width: 20%;
-    height: auto;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 6px 12px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s;
+}
+
+#toggleHistory button:hover {
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#wvForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1; /* Обязательно растягивает форму */
+    height: 100%;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.field-row {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+}
+
+input[type="text"], select, textarea {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    color: var(--text-main);
+    padding: 8px 12px;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+input[type="text"]:focus, select:focus, textarea:focus {
+    border-color: var(--primary);
+}
+
+input[type="text"] {
+    flex: 1;
+    min-width: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+select {
+    cursor: pointer;
+    flex: 1;
+    min-width: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 14px;
+    appearance: none;
+    padding-right: 32px;
+}
+
+select option {
+    background-color: #1e293b; /* Темный фон в тон */
+    color: var(--text-main);
+    padding: 10px;
+}
+
+input[type="button"], button#guess {
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+#psshButton, #licenseButton, #editSchemeButton {
+    background: var(--card-bg);
+    color: var(--text-main);
+    border: 1px solid var(--primary); /* Ободок цвета кнопки Guess */
+    padding: 0 14px;
+    border-radius: var(--radius);
+    font-size: 12px;
+}
+
+#psshButton:hover, #licenseButton:hover, #editSchemeButton:hover {
+    background: rgba(255, 255, 255, 0.1);
 }
 
 #guess {
-    width: 20%;
-    justify-self: center;
-    margin-top: 5%;
-}
-
-#result {
-    width: 90%;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    resize: none;
-    justify-self: center;
-}
-
-#chooserContainer {
+    margin-top: 4px;
+    height: 44px;
+    background: var(--accent-gradient);
+    border: none;
     color: white;
+    font-size: 15px;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
 }
 
-#ckHome h3, label {
-    color: white;
-    justify-self: center;
+#guess:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
 }
 
-#ckHome label {
-    align-self: end;
+#guess:disabled {
+    opacity: 0.5;
+    cursor: wait;
+    transform: none;
 }
 
-#ckResult {
-    width: 90%;
-    overflow-y: scroll;
-    overflow-x: hidden;
+.result-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.result-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+}
+
+#result, #ckResult {
+    flex: 1;
+    min-height: 100px;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    background: rgba(0, 0, 0, 0.3);
     resize: none;
-    justify-self: center;
+    padding: 10px;
+    padding-right: 42px; /* Место под кнопку */
+    margin-bottom: 2px;
+}
+
+.copy-btn, .copy-btn-inline {
+    background: var(--card-bg);
+    border: 1px solid var(--primary); /* Ободок цвета кнопки Guess */
+    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+    opacity: 0.8;
+}
+
+.copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.copy-btn-inline {
+    flex-shrink: 0;
+    align-self: center;
+}
+
+.copy-btn:hover, .copy-btn-inline:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--text-main);
+    opacity: 1;
+}
+
+.copy-btn:active, .copy-btn-inline:active {
+    transform: scale(0.95);
+}
+
+.copy-btn svg, .copy-btn-inline svg {
+    width: 14px;
+    height: 14px;
+}
+
+#chooserContainer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    max-height: 380px;
+}
+
+#chooserContainer li {
+    padding: 12px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: color 0.2s;
+    font-size: 13px;
+    word-break: break-all;
+}
+
+#chooserContainer li:hover {
+    color: var(--primary);
+    background: var(--card-bg);
+}
+
+#chooserSearch {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#schemeCode {
+    height: 360px;
+}
+
+#updateNotice {
+    background: rgba(22, 163, 74, 0.1);
+    border: 1px solid rgba(22, 163, 74, 0.3);
+    padding: 8px;
+    border-radius: var(--radius);
+    font-size: 12px;
+    text-align: center;
+}
+
+/* History Page Styles */
+#historyPanel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.history-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 6px 12px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s;
+}
+
+.action-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.danger-btn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.history-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.history-content {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 12px;
+    overflow-y: auto;
+    font-size: 12px;
+}
+
+/* JsonView theme fix */
+.json-container {
+    font-family: 'Fira Code', monospace !important;
+    background-color: transparent !important;
+    color: var(--text-main) !important;
+}
+
+.json-key {
+    color: var(--primary) !important;
+}
+
+.json-string {
+    color: #10b981 !important;
+}
+
+#updateNotice a {
+    color: var(--primary);
+    font-weight: 600;
 }

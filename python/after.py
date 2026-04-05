@@ -1,7 +1,9 @@
 try:
+    if 'licence' not in globals():
+        raise Exception("The scheme failed to provide a 'licence' variable. Check your CORS or license URL.")
     cdm.parse_license(session_id, licence)
 except Exception as e:
-    js.document.getElementById('result').value=f"Could not decrypt!\n\nLicense Response:\n{licence}\n\nhttps://github.com/FoxRefire/wvg/wiki/How-to-add-custom-license-scheme-yourself"
+    js.document.getElementById('result').value=f"[{schemeName}] Doesn't fit, choose another challenge scheme!\n\nError: {str(e)}\n\nLicense Response:\n{licence if 'licence' in globals() else 'Not fetched'}"
     raise Exception(e)
 
 # get keys

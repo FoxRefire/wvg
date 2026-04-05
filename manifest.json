@@ -1,35 +1,52 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "Widevine L3 Decrypter",
     "version": "241029.1",
-    "version_name": "4316530",
     "icons": {
         "128": "icon.png"
     },
     "permissions": [
-        "webRequest",
-        "webRequestBlocking",
-        "<all_urls>",
-        "activeTab",
         "storage",
-        "tabs",
+        "activeTab",
+        "scripting",
+        "webRequest",
         "contextMenus"
     ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
     "background": {
-        "scripts": ["background.js"],
-        "persistent": true
+        "service_worker": "background.js"
     },
     "content_scripts": [
         {
-            "run_at":"document_start",
-            "matches":["<all_urls>"],
-            "js": ["content.js"],
+            "run_at": "document_start",
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content.js"
+            ],
             "all_frames": true
         }
     ],
-    "browser_action": {
-        "default_title": "Widevine Decrypter"
+    "action": {
+        "default_title": "Widevine Decrypter",
+        "default_popup": "popup/main.html"
     },
-    "web_accessible_resources": ["inject.js"],
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "inject.js",
+                "client_id.bin",
+                "private_key.pem"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+    }
 }
