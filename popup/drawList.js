@@ -1,5 +1,3 @@
-let psshs=chrome.extension.getBackgroundPage().psshs;
-let requests=chrome.extension.getBackgroundPage().requests;
 var userInputs={};
 
 document.getElementById('psshButton').addEventListener("click", () => drawList(psshs, 'pssh'));

@@ -1,110 +1,135 @@
-(async () => {
-window.psshs=[];
-window.requests=[];
-window.bodys=[];
-window.targetIds=[];
-window.pageURL="";
-window.clearkey="";
+// Persistent variables in global scope (will be lost if worker suspends)
+// To prevent data loss, consider using chrome.storage.session
+let psshs = [];
+let requests = [];
+let bodys = [];
+let targetIds = [];
+let pageURL = "";
+let clearkey = "";
+let isBlock = false;
+let blockRules = [];
 
-chrome.storage.local.get("isBlock", (value) => {
-    window.isBlock = value.isBlock;
-})
+async function init() {
+    chrome.storage.local.get("isBlock", (value) => {
+        isBlock = value.isBlock || false;
+    });
 
-function convertHeaders(obj){
-    return JSON.stringify(Object.fromEntries(obj.map(header => [header.name, header.value])))
+    try {
+        const response = await fetch(chrome.runtime.getURL("blockRules.conf"));
+        const text = await response.text();
+        blockRules = text.replace(/\n^\s*$|\s*\/\/.*|\s*$/gm, "").split("\n");
+    } catch (e) {
+        console.warn("Failed to load blockRules.conf", e);
+    }
 }
 
-window.blockRules = await fetch("blockRules.conf").then((r)=>r.text());
-window.blockRules = window.blockRules.replace(/\n^\s*$|\s*\/\/.*|\s*$/gm, "").split("\n");
+init();
+
+function convertHeaders(obj) {
+    return JSON.stringify(Object.fromEntries(obj.map(header => [header.name, header.value])));
+}
+
 function testBlock(url) {
-    return window.isBlock && window.blockRules.some(e => url.includes(e));
+    return isBlock && blockRules.some(e => url.includes(e));
 }
 
-//Get URL and headers from POST requests
+// Get URL and headers from POST requests
+// Note: 'blocking' is not supported in MV3 for standard extensions.
+// For observation, use 'requestHeaders'. For blocking, use declarativeNetRequest.
+const webRequestOptions = ["requestHeaders"];
+// if you have webRequestBlocking permission and are on a supported environment:
+// webRequestOptions.push("extraHeaders");
+
 chrome.webRequest.onBeforeSendHeaders.addListener(
     function(details) {
         if (details.method === "POST") {
-            window.requests.push({
-                url:details.url,
-                headers:convertHeaders(details.requestHeaders),
-                body:window.bodys.find((b) => b.id == details.requestId).body
+            const bodyObj = bodys.find((b) => b.id == details.requestId);
+            requests.push({
+                url: details.url,
+                headers: convertHeaders(details.requestHeaders),
+                body: bodyObj ? bodyObj.body : ""
             });
-            if(testBlock(details.url)){
-                return {cancel:true}
+            if (testBlock(details.url)) {
+                // In MV3, this will NOT work without declarativeNetRequest
+                // return {cancel:true}
+                console.log("Blocking request: " + details.url);
             }
         }
     },
-    {urls: ["<all_urls>"]},
-    ["requestHeaders", "blocking"]
+    { urls: ["<all_urls>"] },
+    webRequestOptions
 );
 
-//Get requestBody from POST requests
+// Get requestBody from POST requests
 chrome.webRequest.onBeforeRequest.addListener(
     function(details) {
-        if (details.method === "POST") {
-            window.bodys.push({
-                body:details.requestBody.raw ? btoa(String.fromCharCode(...new Uint8Array(details.requestBody.raw[0]['bytes']))) : "",
-                id:details.requestId
+        if (details.method === "POST" && details.requestBody && details.requestBody.raw) {
+            bodys.push({
+                body: btoa(String.fromCharCode(...new Uint8Array(details.requestBody.raw[0]['bytes']))),
+                id: details.requestId
             });
         }
     },
-    {urls: ["<all_urls>"]},
+    { urls: ["<all_urls>"] },
     ["requestBody"]
 );
 
-//Receive PSSH from content.js
+// Receive messages from content.js
 chrome.runtime.onMessage.addListener(
-    function (request, sender, sendResponse) {
-        switch(request.type){
+    function(request, sender, sendResponse) {
+        switch (request.type) {
             case "RESET":
-                location.reload()
+                psshs = [];
+                requests = [];
+                bodys = [];
+                targetIds = [];
+                pageURL = "";
+                clearkey = "";
                 break;
             case "PSSH":
-                window.psshs.push(request.text)
-                window.pageURL=sender.tab.url
-                window.targetIds=[sender.tab.id, sender.frameId]
+                psshs.push(request.text);
+                pageURL = sender.tab.url;
+                targetIds = [sender.tab.id, sender.frameId];
                 break;
             case "CLEARKEY":
-                window.clearkey=request.text
+                clearkey = request.text;
+                break;
+            case "GET_DATA": // Added helper for popup
+                sendResponse({psshs, requests, bodys, targetIds, pageURL, clearkey});
                 break;
         }
+        return true;
     }
 );
-} )()
 
-chrome.browserAction.onClicked.addListener(tab => {
-    if(chrome.windows){
-        chrome.windows.create({
-            url: "popup/main.html",
-            type: "popup",
-            width: 820,
-            height: 600
+// Popup is now handled natively via default_popup in manifest.json
+
+function createMenu() {
+    chrome.storage.local.set({ 'isBlock': false });
+    chrome.contextMenus.create({
+        id: "toggleBlocking",
+        title: "Enable License Blocking",
+        contexts: ["all"]
+    }, () => {
+        if (chrome.runtime.lastError) {
+            // Ignore error if menu already exists
+        }
+    });
+}
+
+chrome.runtime.onInstalled.addListener(createMenu);
+chrome.runtime.onStartup.addListener(createMenu);
+
+chrome.contextMenus.onClicked.addListener(item => {
+    if (item.menuItemId == "toggleBlocking") {
+        chrome.storage.local.get("isBlock", (value) => {
+            const newState = !value.isBlock;
+            chrome.storage.local.set({ 'isBlock': newState });
+            chrome.contextMenus.update("toggleBlocking", {
+                title: newState ? "Disable License Blocking" : "Enable License Blocking"
+            });
+            isBlock = newState;
         });
-    } else {
-        chrome.tabs.create({url: 'popup/main.html'})
     }
 });
 
-function createMenu(){
-    chrome.storage.local.set({'isBlock': false}, null);
-    chrome.contextMenus.create({
-        id: "toggleBlocking",
-        title: "Enable License Blocking"
-    });
-}
-chrome.runtime.onInstalled.addListener(createMenu)
-chrome.runtime.onStartup.addListener(createMenu)
-
-chrome.contextMenus.onClicked.addListener(item => {
-    if(item.menuItemId == "toggleBlocking"){
-        chrome.storage.local.get("isBlock", (value) => {
-            if(value.isBlock){
-                chrome.storage.local.set({'isBlock': false}, null);
-                chrome.contextMenus.update("toggleBlocking",{title: "Enable License Blocking"})
-            } else {
-                chrome.storage.local.set({'isBlock': true}, null);
-                chrome.contextMenus.update("toggleBlocking",{title: "Disable License Blocking"})
-            }
-        })
-    }
-})

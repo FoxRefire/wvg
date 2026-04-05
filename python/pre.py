@@ -58,8 +58,16 @@ async def corsFetch(url: str, method: str, headers: [dict, str], body: [dict, by
 
     match resType:
         case "blob": pass
-        case "str": res = res.decode()
-        case "json": res = json.loads(res.decode())
+        case "str": 
+            try:
+                res = res.decode()
+            except UnicodeDecodeError:
+                raise Exception("Response is binary, cannot decode as string. Try using 'blob' resType.")
+        case "json": 
+            try:
+                res = json.loads(res.decode())
+            except (UnicodeDecodeError, json.JSONDecodeError):
+                raise Exception("Response is not valid JSON or contains binary data.")
 
     return res
 
@@ -103,4 +111,4 @@ session_id = cdm.open()
 # load headers
 licHeaders=json.loads(licHeaders)
 
-js.chrome.extension.getBackgroundPage().isBlock=False
+js.chrome.storage.local.set({"isBlock": False})

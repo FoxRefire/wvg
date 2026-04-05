@@ -1,83 +1,122 @@
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Widevine L3 Guessor 2024</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="/libs/pyodide/pyodide.js"></script>
-  </head>
-  <body>
-    <div id="toggleHistory">
-      <a href="./history.html"><button>Show History</button></a>
-      <br><br>
-    </div>
-    <div id="noEME">
-      Widevine content hasn't detected in this page.<br>
-      Open widevine-protected website and try again!
-    </div>
-    <div id="home" class="hidden">
-      <form id="wvForm">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Widevine L3 Guessor 2024</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="/libs/pyodide/pyodide.js"></script>
+</head>
+
+<body>
+  <div id="toggleHistory">
+    <a href="./history.html"><button>Show History</button></a>
+  </div>
+
+  <div id="noEME">
+    Widevine content hasn't been detected on this page.<br>
+    Open a widevine-protected website and try again!
+  </div>
+
+  <div id="home" class="hidden">
+    <form id="wvForm">
+      <div class="input-group">
         <label for="pssh">PSSH</label>
-        <input type="text" id="pssh" disabled/>
-        <input type="button" id="psshButton" value="Select" /><br>
+        <div class="field-row">
+          <input type="text" id="pssh" disabled placeholder="No PSSH detected" />
+          <button id="copyPsshBtn" type="button" class="copy-btn-inline" title="Copy">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          </button>
+          <input type="button" id="psshButton" value="Select" />
+        </div>
+      </div>
 
+      <div class="input-group">
         <label for="license">License URL</label>
-        <input type="text" id="license" disabled/>
-        <input type="button" id="licenseButton" value="Select" /><br>
+        <div class="field-row">
+          <input type="text" id="license" disabled placeholder="No License URL detected" />
+          <button id="copyLicenseBtn" type="button" class="copy-btn-inline" title="Copy">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          </button>
+          <input type="button" id="licenseButton" value="Select" />
+        </div>
+      </div>
 
+      <div class="input-group">
         <label for="schemeSelect">Challenge scheme</label>
-        <select id="schemeSelect">
-          <option value="Amazon">Amazon</option>
-          <option value="Allente">Allente</option>
-          <option value="CanalPlusVOD">CanalPlus (VOD)</option>
-          <option value="CanalPlusLive">CanalPlus (Live)</option>
-          <option value="Comcast">Comcast Xfinity</option>
-          <option value="CommonWV" selected>CommonWV</option>
-          <option value="DRMToday">DRMToday</option>
-          <option value="Fantop">Fantop</option>
-          <option value="GlobalTV">GlobalTV</option>
-          <option value="Heuristic">Heuristic</option>
-          <option value="moTV">moTV</option>
-          <option value="NosTV">NosTV</option>
-          <option value="oqee">Oqee</option>
-          <option value="PolSatBoxGo">PolSatBoxGo</option>
-          <option value="RedBee">Red Bee Media</option>
-          <option value="Sling">Sling</option>
-          <option value="thePlatform">thePlatform</option>
-          <option value="VdoCipher">VdoCipher</option>
-          <option value="VUDRM">VUDRM</option>
-          <option value="Vodafone">Vodafone</option>
-          <option value="Youku">Youku</option>
-          <option value="YouTube">YouTube</option>
-        </select>
-        <input type="button" id="editSchemeButton" value="Edit" />
+        <div class="field-row">
+          <select id="schemeSelect">
+            <option value="Amazon">Amazon</option>
+            <option value="Allente">Allente</option>
+            <option value="CanalPlusVOD">CanalPlus (VOD)</option>
+            <option value="CanalPlusLive">CanalPlus (Live)</option>
+            <option value="Comcast">Comcast Xfinity</option>
+            <option value="CommonWV" selected>CommonWV</option>
+            <option value="DRMToday">DRMToday</option>
+            <option value="Fantop">Fantop</option>
+            <option value="GlobalTV">GlobalTV</option>
+            <option value="Heuristic">Heuristic</option>
+            <option value="moTV">moTV</option>
+            <option value="NosTV">NosTV</option>
+            <option value="oqee">Oqee</option>
+            <option value="PolSatBoxGo">PolSatBoxGo</option>
+            <option value="RedBee">Red Bee Media</option>
+            <option value="Sling">Sling</option>
+            <option value="thePlatform">thePlatform</option>
+            <option value="VdoCipher">VdoCipher</option>
+            <option value="VUDRM">VUDRM</option>
+            <option value="Vodafone">Vodafone</option>
+            <option value="Youku">Youku</option>
+            <option value="YouTube">YouTube</option>
+          </select>
+          <input type="button" id="editSchemeButton" value="Edit" />
+        </div>
+      </div>
 
-        <input type="button" id="guess" value="Guess!"><br>
+      <input type="button" id="guess" value="Guess!">
 
-        <label for="result">Result:</label><br>
-        <textarea id="result" rows="10" cols="50"></textarea>
+      <div class="input-group result-group">
+        <label for="result">Result:</label>
+        <div class="result-wrapper">
+          <textarea id="result" spellcheck="false" placeholder="Decryption results will appear here..."></textarea>
+          <button id="copyResultBtn" type="button" class="copy-btn" title="Copy">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 
-      </form>
+  <div id="ckHome" class="hidden">
+    <h3>Clearkey detected</h3>
+    <div class="input-group">
+      <label for="ckResult">Result:</label>
+      <textarea id="ckResult" spellcheck="false"></textarea>
     </div>
-    <div id="ckHome" class="hidden">
-      <h3>Clearkey detected</h3>
-      <label for="ckResult">Result:</label><br>
-      <textarea id="ckResult" rows="10" cols="50"></textarea>
+  </div>
+
+  <div id="chooserContainer" class="hidden">
+    <input type="text" id="chooserSearch" placeholder="Search items...">
+    <ul id="items"></ul>
+  </div>
+
+  <div id="editSchemeContainer" class="hidden">
+    <div class="input-group">
+      <label>Scheme Python Code</label>
+      <textarea id="schemeCode" style="height: 380px;"></textarea>
     </div>
-    <div id="chooserContainer" class="hidden">
-      <input type="text" id="chooserSearch" placeholder="Search">
-      <ul id="items"></ul>
-    </div>
-    <div id="editSchemeContainer" class="hidden">
-      <textarea id="schemeCode" rows="10" cols="50"></textarea>
-      <input type="button" id="editSchemeOK" value="OK" />
-    </div>
-    <div id="updateNotice" class="hidden">
-      Version =VER= update available!
-      <a href="https://github.com/FoxRefire/wvg/archive/=HASH=.zip">Download</a>
-    </div>
-  </body>
+    <input type="button" id="editSchemeOK" value="Done"
+      style="height: 48px; background: var(--accent-gradient); border: none; color: white; border-radius: var(--radius); cursor: pointer; font-weight: 600;" />
+  </div>
+
+  <div id="updateNotice" class="hidden">
+    Version =VER= update available!
+    <a href="https://github.com/FoxRefire/wvg/archive/=HASH=.zip">Download Now</a>
+  </div>
+
   <script src="./main.js" type="module"></script>
   <script src="./drawList.js"></script>
   <script src="./editScheme.js"></script>
   <script src="./updateNotice.js"></script>
+</body>
+
 </html>

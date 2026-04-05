@@ -1,17 +1,28 @@
 <html>
-  <head>
+<head>
     <meta charset="UTF-8">
     <title>Widevine L3 Guessor - History</title>
     <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <div id="history">
-      <a href="./main.html"><button>🔙 Back</button></a>
-      <button id="saveHistory">💾 Save History</button>
-      <button id="clearHistory">❌ Clear History</button>
-      <div id="histDisp"></div>
+</head>
+<body>
+    <div id="historyPanel" class="panel">
+        <div class="history-header">
+            <a href="./main.html" class="back-link">
+                <button type="button" class="action-btn">🔙 Back</button>
+            </a>
+            <div class="history-actions">
+                <button id="saveHistory" class="action-btn">💾 Save</button>
+                <button id="clearHistory" class="action-btn danger-btn">❌ Clear</button>
+            </div>
+        </div>
+
+        <div class="history-container">
+            <label>Saved Keys Database</label>
+            <div id="histDisp" class="history-content"></div>
+        </div>
     </div>
-  </body>
-  <script src="/libs/jsonview.js"></script>
-  <script src="./history.js"></script>
+
+    <script src="/libs/jsonview.js"></script>
+    <script src="./history.js"></script>
+</body>
 </html>
