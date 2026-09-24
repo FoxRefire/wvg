@@ -1,83 +1,93 @@
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <title>Widevine L3 Guessor 2024</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <title>Widevine L3 Guesser</title>
+    <link rel="stylesheet" href="style.css" />
     <script src="/libs/pyodide/pyodide.js"></script>
   </head>
   <body>
     <div id="toggleHistory">
-      <a href="./history.html"><button>Show History</button></a>
-      <br><br>
+      <a href="./history.html"><button type="button">Show History</button></a>
     </div>
+
     <div id="noEME">
-      Widevine content hasn't detected in this page.<br>
-      Open widevine-protected website and try again!
+      Widevine content hasn't been detected on this page.<br />
+      Open a protected page, start playback and open this popup again.
     </div>
+
     <div id="home" class="hidden">
       <form id="wvForm">
         <label for="pssh">PSSH</label>
-        <input type="text" id="pssh" disabled/>
-        <input type="button" id="psshButton" value="Select" /><br>
+        <div class="row">
+          <input type="text" id="pssh" disabled />
+          <input type="button" id="psshButton" value="Select" />
+        </div>
 
         <label for="license">License URL</label>
-        <input type="text" id="license" disabled/>
-        <input type="button" id="licenseButton" value="Select" /><br>
+        <div class="row">
+          <input type="text" id="license" disabled />
+          <input type="button" id="licenseButton" value="Select" />
+        </div>
 
         <label for="schemeSelect">Challenge scheme</label>
-        <select id="schemeSelect">
-          <option value="Amazon">Amazon</option>
-          <option value="Allente">Allente</option>
-          <option value="CanalPlusVOD">CanalPlus (VOD)</option>
-          <option value="CanalPlusLive">CanalPlus (Live)</option>
-          <option value="Comcast">Comcast Xfinity</option>
-          <option value="CommonWV" selected>CommonWV</option>
-          <option value="DRMToday">DRMToday</option>
-          <option value="Fantop">Fantop</option>
-          <option value="GlobalTV">GlobalTV</option>
-          <option value="Heuristic">Heuristic</option>
-          <option value="moTV">moTV</option>
-          <option value="NosTV">NosTV</option>
-          <option value="oqee">Oqee</option>
-          <option value="PolSatBoxGo">PolSatBoxGo</option>
-          <option value="RedBee">Red Bee Media</option>
-          <option value="Sling">Sling</option>
-          <option value="thePlatform">thePlatform</option>
-          <option value="VdoCipher">VdoCipher</option>
-          <option value="VUDRM">VUDRM</option>
-          <option value="Vodafone">Vodafone</option>
-          <option value="Youku">Youku</option>
-          <option value="YouTube">YouTube</option>
-        </select>
-        <input type="button" id="editSchemeButton" value="Edit" />
+        <div class="row">
+          <select id="schemeSelect">
+            <option value="Amazon">Amazon</option>
+            <option value="Allente">Allente</option>
+            <option value="CanalPlusVOD">CanalPlus (VOD)</option>
+            <option value="CanalPlusLive">CanalPlus (Live)</option>
+            <option value="Comcast">Comcast Xfinity</option>
+            <option value="CommonWV" selected>CommonWV</option>
+            <option value="DRMToday">DRMToday</option>
+            <option value="Fantop">Fantop</option>
+            <option value="GlobalTV">GlobalTV</option>
+            <option value="Heuristic">Heuristic</option>
+            <option value="moTV">moTV</option>
+            <option value="NosTV">NosTV</option>
+            <option value="oqee">Oqee</option>
+            <option value="PolSatBoxGo">PolSatBoxGo</option>
+            <option value="RedBee">Red Bee Media</option>
+            <option value="Sling">Sling</option>
+            <option value="thePlatform">thePlatform</option>
+            <option value="VdoCipher">VdoCipher</option>
+            <option value="VUDRM">VUDRM</option>
+            <option value="Vodafone">Vodafone</option>
+            <option value="Youku">Youku</option>
+            <option value="YouTube">YouTube</option>
+          </select>
+          <input type="button" id="editSchemeButton" value="Edit" />
+        </div>
 
-        <input type="button" id="guess" value="Guess!"><br>
+        <input type="button" id="guess" value="Guess!" />
+        <div id="status"></div>
 
-        <label for="result">Result:</label><br>
-        <textarea id="result" rows="10" cols="50"></textarea>
-
+        <label for="result">Result</label>
+        <textarea id="result" rows="8" placeholder="Keys appear here. Click to copy."></textarea>
       </form>
     </div>
+
     <div id="ckHome" class="hidden">
-      <h3>Clearkey detected</h3>
-      <label for="ckResult">Result:</label><br>
-      <textarea id="ckResult" rows="10" cols="50"></textarea>
+      <h3>ClearKey detected</h3>
+      <label for="ckResult">Result</label>
+      <textarea id="ckResult" rows="8" placeholder="Click to copy."></textarea>
     </div>
+
     <div id="chooserContainer" class="hidden">
-      <input type="text" id="chooserSearch" placeholder="Search">
+      <input type="text" id="chooserSearch" placeholder="Search" />
       <ul id="items"></ul>
     </div>
+
     <div id="editSchemeContainer" class="hidden">
-      <textarea id="schemeCode" rows="10" cols="50"></textarea>
+      <textarea id="schemeCode" rows="12"></textarea>
       <input type="button" id="editSchemeOK" value="OK" />
     </div>
-    <div id="updateNotice" class="hidden">
-      Version =VER= update available!
-      <a href="https://github.com/FoxRefire/wvg/archive/=HASH=.zip">Download</a>
-    </div>
+
+    <div id="updateNotice" class="hidden"></div>
+
+    <script src="./main.js" type="module"></script>
+    <script src="./drawList.js"></script>
+    <script src="./editScheme.js"></script>
+    <script src="./updateNotice.js"></script>
   </body>
-  <script src="./main.js" type="module"></script>
-  <script src="./drawList.js"></script>
-  <script src="./editScheme.js"></script>
-  <script src="./updateNotice.js"></script>
 </html>

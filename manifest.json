@@ -1,35 +1,54 @@
 {
-    "manifest_version": 2,
-    "name": "Widevine L3 Decrypter",
-    "version": "241029.1",
-    "version_name": "4316530",
-    "icons": {
-        "128": "icon.png"
+  "manifest_version": 3,
+  "name": "Widevine L3 Decrypter",
+  "version": "260924.1",
+  "version_name": "1765416",
+  "description": "Read the Widevine license traffic of the current page and turn it into content keys.",
+  "icons": {
+    "128": "icon.png"
+  },
+  "minimum_chrome_version": "111",
+  "permissions": [
+    "webRequest",
+    "storage",
+    "tabs",
+    "contextMenus",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": [
+        "<all_urls>"
+      ],
+      "world": "MAIN",
+      "js": [
+        "inject.js"
+      ],
+      "all_frames": true
     },
-    "permissions": [
-        "webRequest",
-        "webRequestBlocking",
-        "<all_urls>",
-        "activeTab",
-        "storage",
-        "tabs",
-        "contextMenus"
-    ],
-    "background": {
-        "scripts": ["background.js"],
-        "persistent": true
-    },
-    "content_scripts": [
-        {
-            "run_at":"document_start",
-            "matches":["<all_urls>"],
-            "js": ["content.js"],
-            "all_frames": true
-        }
-    ],
-    "browser_action": {
-        "default_title": "Widevine Decrypter"
-    },
-    "web_accessible_resources": ["inject.js"],
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+    {
+      "run_at": "document_start",
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "all_frames": true
+    }
+  ],
+  "action": {
+    "default_title": "Widevine Decrypter",
+    "default_popup": "popup/main.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
 }

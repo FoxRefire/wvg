@@ -1,99 +1,134 @@
 .hidden {
-    display: none;
+  display: none;
 }
 
-html, body {
-    display: grid;
-    height: 100%;
-    width: 100%;
-    margin: 0; /* Reset default margin */
-    padding: 0; /* Reset default padding */
+html {
+  width: 400px;
+  height: 560px;
 }
 
 body {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background: linear-gradient(45deg, #0d364c, #062535, #02141e);
-    grid-template-rows: auto 1fr auto;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 12px;
+  overflow-y: auto;
+  color: #fff;
+  font: 13px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: linear-gradient(45deg, #0d364c, #062535, #02141e);
 }
 
 #noEME {
-    justify-self: center;
-    align-self: center;
-    color: white;
+  margin-top: 45%;
+  text-align: center;
 }
 
 #updateNotice {
-    justify-self: center;
-    align-self: end;
-    color: white;
+  margin-top: 12px;
+  text-align: center;
+  font-size: 12px;
 }
 
-#updateNotice a{
-    color: aqua;
-}
-
-#wvForm {
-    display: grid;
-    grid-template-rows: auto;
-    color: white;
-}
-
-#wvForm label {
-    justify-self: center;
-}
-
-#pssh, #license, #schemeSelect {
-    width: 80%;
-    justify-self: center;
-}
-
-#psshButton, #licenseButton, #editSchemeButton {
-    width: 20%;
-    justify-self: center;
+#updateNotice a {
+  color: aqua;
 }
 
 #toggleHistory {
-    display: grid;
+  margin-bottom: 12px;
 }
 
 #toggleHistory button {
-    width: 20%;
-    height: auto;
+  width: 100%;
+}
+
+#wvForm {
+  display: grid;
+  gap: 4px;
+}
+
+#wvForm label {
+  margin-top: 6px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px;
+}
+
+#pssh,
+#license,
+#schemeSelect,
+#chooserSearch,
+#schemeCode,
+#result,
+#ckResult {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+}
+
+#pssh,
+#license {
+  font-size: 11px;
 }
 
 #guess {
-    width: 20%;
-    justify-self: center;
-    margin-top: 5%;
+  margin-top: 8px;
 }
 
-#result {
-    width: 90%;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    resize: none;
-    justify-self: center;
+#status {
+  min-height: 16px;
+  font-size: 11px;
+  color: #9fd8ff;
 }
 
-#chooserContainer {
-    color: white;
+#result,
+#ckResult,
+#schemeCode {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  resize: none;
 }
 
-#ckHome h3, label {
-    color: white;
-    justify-self: center;
+#ckHome,
+#chooserContainer,
+#editSchemeContainer {
+  gap: 6px;
 }
 
-#ckHome label {
-    align-self: end;
+#ckHome h3 {
+  margin: 0;
 }
 
-#ckResult {
-    width: 90%;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    resize: none;
-    justify-self: center;
+#items {
+  max-height: 430px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+#items li {
+  padding: 6px 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  word-break: break-all;
+  cursor: pointer;
+}
+
+#items li:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+#history {
+  display: grid;
+  gap: 8px;
+}
+
+#histDisp {
+  max-height: 440px;
+  overflow: auto;
+  font-size: 11px;
+  word-break: break-all;
 }

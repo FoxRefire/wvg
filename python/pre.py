@@ -103,4 +103,4 @@ session_id = cdm.open()
 # load headers
 licHeaders=json.loads(licHeaders)
 
-js.chrome.extension.getBackgroundPage().isBlock=False
+await js.setLicenseBlocking(False)

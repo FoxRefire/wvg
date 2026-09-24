@@ -38,6 +38,17 @@
 
      2\. \+(from .zip/.crx/.user.js)
 
+### Usage
+
+Click the extension icon to open the popup under the toolbar. It shows the PSSH
+of the playing video and the license request that was picked out of the network
+log. Press `Guess!` to turn that pair into content keys, then click the result
+box to copy them.
+
+The popup is an ordinary browser popup, so it closes as soon as you click
+outside of it. Everything already collected stays available, but a run that is
+still in progress when the popup closes has to be started again.
+
 ### Demo
 [Screencast_20240505_014046.webm](https://github.com/FoxRefire/wvg/assets/155989196/dbb07fde-a368-40f7-8209-711d5586009e)
 
@@ -48,4 +59,3 @@
 
 ### Big Thanks and inspired by
 https://github.com/emarsden/pssh-box-wasm/
-

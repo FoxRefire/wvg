@@ -1,28 +1,28 @@
-let psshs=chrome.extension.getBackgroundPage().psshs;
-function showHistory(){
-    chrome.storage.local.get(null, (data => {
-        let tree=jsonview.renderJSON(JSON.stringify(data), document.getElementById('histDisp'));
-        jsonview.toggleNode(tree);
-    }));
+function showHistory() {
+  chrome.storage.local.get(null, (data) => {
+    const tree = jsonview.renderJSON(JSON.stringify(data), document.getElementById("histDisp"));
+    jsonview.toggleNode(tree);
+  });
 }
 
-function saveHistory(){
-    chrome.storage.local.get(null, (data => {
-        let blob = new Blob([JSON.stringify(data, null, "\t")], {type: "text/plain"});
-        let a = document.createElement('a');
-        a.download = 'wvgHistory.json';
-        a.href = URL.createObjectURL(blob);
-        a.click();
-    }));
+function saveHistory() {
+  chrome.storage.local.get(null, (data) => {
+    const blob = new Blob([JSON.stringify(data, null, "\t")], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.download = "wvgHistory.json";
+    link.href = URL.createObjectURL(blob);
+    link.click();
+  });
 }
 
-function clearHistory(){
-    if(confirm("Do you really want to clear history?")){
-        chrome.storage.local.clear();
-        document.getElementById('histDisp').innerHTML="";
-    }
+function clearHistory() {
+  if (confirm("Do you really want to clear history?")) {
+    chrome.storage.local.clear(() => {
+      document.getElementById("histDisp").innerHTML = "";
+    });
+  }
 }
 
-document.getElementById('saveHistory').addEventListener("click", saveHistory);
-document.getElementById('clearHistory').addEventListener("click", clearHistory);
-showHistory()
+document.getElementById("saveHistory").addEventListener("click", saveHistory);
+document.getElementById("clearHistory").addEventListener("click", clearHistory);
+showHistory();
